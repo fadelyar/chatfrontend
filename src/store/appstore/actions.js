@@ -29,7 +29,7 @@ const madeFailedRequest = function (error) {
 export const login = function (data, callback) {
    return (dispatch) => {
       dispatch(madeRequest())
-      axios.post('http://localhost:8000/userprofile/login/', data)
+      axios.post('https://chat-rest-api-backend.herokuapp.com/userprofile/login/', data)
          .then((response) => {
             dispatch(madeSuccessRequest(response.data))
             callback(null)
@@ -45,7 +45,7 @@ export const login = function (data, callback) {
 export const register = function (data, callback) {
    return (dispatch) => {
       dispatch(madeRequest())
-      axios.post('http://localhost:8000/userprofile/register/', data)
+      axios.post('https://chat-rest-api-backend.herokuapp.com/userprofile/register/', data)
          .then((response) => {
             dispatch(madeSuccessRequest(response.data))
             callback(null)

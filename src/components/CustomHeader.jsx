@@ -118,7 +118,7 @@ function CustomHeader(props) {
                   </Button>
                   {props.currentUser &&
                   
-                     <Avatar src={`/images/${props.currentUser.profile_pic}`}>
+                     <Avatar>
                         {props.currentUser.user_name.charAt(0)}
                      </Avatar>
                   }

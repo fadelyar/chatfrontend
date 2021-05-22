@@ -31,6 +31,9 @@ const useStyle = makeStyles((theme) => ({
       alignItems: "center",
       alignContent: "",
       justifyContent: "space-around",
+      [theme.breakpoints.down("sm")]: {
+         width: "95%",
+      },
    },
    eachDiv: {
       marginBottom: theme.spacing(3),

@@ -22,6 +22,8 @@ import SendIcon from "@material-ui/icons/SendRounded";
 import CustomDialog from "../../src/components/CustomDialog";
 import Tooltip from "@material-ui/core/Tooltip";
 import { io } from "socket.io-client";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 let socket = null;
 
@@ -98,7 +100,9 @@ const useStyle = makeStyles((theme) => ({
 function Group(props) {
    const router = useRouter();
    const classes = useStyle();
-   const [open, setOpen] = useState(true);
+   const theme = useTheme();
+   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+   const [open, setOpen] = useState(!matches);
    const [messages, setMessages] = useState([]);
    const [messageValue, setMessageValue] = useState("");
    const [expanded, setExpanded] = React.useState(false);

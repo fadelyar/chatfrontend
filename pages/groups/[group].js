@@ -133,6 +133,7 @@ function Group(props) {
       if (!props.currentUser) {
          router.push("/login");
       } else {
+         setMessages([]);
          socket = io(
             `https://live-chat-application-simple.herokuapp.com/?room=${props.group}`,
             {

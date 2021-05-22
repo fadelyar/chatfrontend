@@ -119,7 +119,7 @@ function CustomHeader(props) {
                   {props.currentUser &&
                   
                      <Avatar>
-                        {props.currentUser.user_name.charAt(0)}
+                        {props.currentUser ? props.currentUser.name.charAt(0) : null}
                      </Avatar>
                   }
                </div>

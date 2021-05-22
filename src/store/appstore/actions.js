@@ -1,58 +1,71 @@
 import {
-   USER_FAILED_REQUEST, USER_MADE_REQUEST,
-   USER_SUCCESS_REQUEST
-} from './actiontype'
-import axios from 'axios'
+   USER_FAILED_REQUEST,
+   USER_MADE_REQUEST,
+   USER_SUCCESS_REQUEST,
+} from "./actiontype";
+import axios from "axios";
 
 const madeRequest = function () {
    return {
-      type: USER_MADE_REQUEST
-   }
-}
+      type: USER_MADE_REQUEST,
+   };
+};
 
 const madeSuccessRequest = function (currentUser) {
    return {
       type: USER_SUCCESS_REQUEST,
-      payload: currentUser
-   }
-}
+      payload: currentUser,
+   };
+};
 
 const madeFailedRequest = function (error) {
    return {
       type: USER_FAILED_REQUEST,
-      payload: error
-   }
-}
-
+      payload: error,
+   };
+};
 
 // login user to database
 export const login = function (data, callback) {
    return (dispatch) => {
-      dispatch(madeRequest())
-      axios.post('https://chat-rest-api-backend.herokuapp.com/userprofile/login/', data)
+      dispatch(madeRequest());
+      // axios.post('https://chat-rest-api-backend.herokuapp.com/userprofile/login/', data)
+      axios
+         .post(
+            "https://live-chat-application-simple.herokuapp.com/user/login",
+            data
+         )
          .then((response) => {
-            dispatch(madeSuccessRequest(response.data))
-            callback(null)
+            dispatch(madeSuccessRequest(response.data));
+            callback(null);
          })
          .catch((reason) => {
-            dispatch(madeFailedRequest(reason.response.data))
-            callback(reason.response.data)
-         })
-   }
-}
+            dispatch(madeFailedRequest(reason.response.data));
+            callback(reason.response.data);
+         });
+   };
+};
 
 // register user to database
 export const register = function (data, callback) {
    return (dispatch) => {
-      dispatch(madeRequest())
-      axios.post('https://chat-rest-api-backend.herokuapp.com/userprofile/register/', data)
+      dispatch(madeRequest());
+      // .post(
+      //    "https://chat-rest-api-backend.herokuapp.com/userprofile/register/",
+      //    data
+      // )
+      axios
+         .post(
+            "https://live-chat-application-simple.herokuapp.com/user/register",
+            data
+         )
          .then((response) => {
-            dispatch(madeSuccessRequest(response.data))
-            callback(null)
+            dispatch(madeSuccessRequest(response.data));
+            callback(null);
          })
          .catch((reason) => {
-            dispatch(madeFailedRequest(reason.response.data))
-            callback(reason.response.data)
-         })
-   }
-}
+            dispatch(madeFailedRequest(reason.response.data));
+            callback(reason.response.data);
+         });
+   };
+};

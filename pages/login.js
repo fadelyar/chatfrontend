@@ -42,11 +42,11 @@ const useStyle = makeStyles(theme => ({
 }))
 
 const initailValues = {
-   email: '',
+   name: '',
    password: ''
 }
 const validationSchema = yup.object({
-   email: yup.string().email('wrong email address').required('email is required'),
+   name: yup.string().required('name is required'),
    password: yup.string().min(2, 'password too short').max(20, 'password too long')
       .required('password is required')
 })
@@ -55,6 +55,7 @@ function Login(props) {
 
    const classes = useStyle()
    const router = useRouter()
+
 
    const onSubmit = function (values) {
       props.login(values, (error) => {
@@ -65,6 +66,11 @@ function Login(props) {
 
    return (
       <div className={classes.root}>
+         {/* <div style={{ position: 'absolute', top: 550 }}>
+            {
+               props.loaded && <CircularProgress color='primary' />
+            }
+         </div> */}
          <div className={classes.formDiv}>
             <Typography variant='h5' className={classes.typography}>
                Login
@@ -74,7 +80,7 @@ function Login(props) {
                   onSubmit={onSubmit}>
                   <Form>
                      <div className={classes.eachDiv}>
-                        <Field name='email'>
+                        <Field name='name'>
                            {
                               (field) => {
                                  return (
@@ -82,7 +88,7 @@ function Login(props) {
                                        error={field.meta.error && field.meta.touched}
                                        fullWidth size='small'
                                        label={field.meta.error && field.meta.touched ?
-                                          field.meta.error : 'Email'}
+                                          field.meta.error : 'Name'}
                                     />
                                  )
                               }
@@ -132,8 +138,14 @@ function Login(props) {
                </Formik>
             </div>
          </div>
-      </div>
+      </div >
    )
+}
+
+const mapStateToProps = function (state) {
+   return {
+      loaded: state.appStore.loaded
+   }
 }
 
 const mapDispatchToProps = function (dispatch) {
@@ -142,4 +154,4 @@ const mapDispatchToProps = function (dispatch) {
    }
 }
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

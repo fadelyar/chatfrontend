@@ -1,4 +1,4 @@
-import {makeStyles, Snackbar} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -9,7 +9,8 @@ import Link from "next/link";
 import {login} from "../src/store/appstore/actions";
 import {connect} from "react-redux";
 import {useRouter} from "next/router";
-import {Alert} from "@material-ui/lab";
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 
 const useStyle = makeStyles((theme) => ({
 	root: {
@@ -78,7 +79,7 @@ function Login(props) {
 
 	const onSubmit = function (values) {
 		props.login(values, (error) => {
-			if (error) return setOpen(true);
+			if (error) return handleClick();
 			router.replace("/");
 		});
 	};

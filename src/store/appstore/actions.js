@@ -40,8 +40,8 @@ export const login = function (data, callback) {
             callback(null);
          })
          .catch((reason) => {
-            dispatch(madeFailedRequest(reason.response.data));
-            callback(reason.response.data);
+            dispatch(madeFailedRequest(reason.response.data.message));
+            callback(reason.response.data.message);
          });
    };
 };

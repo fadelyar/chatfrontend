@@ -9,6 +9,8 @@ import Link from "next/link";
 import { connect } from "react-redux";
 import { register } from "../src/store/appstore/actions";
 import { useRouter } from "next/router";
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 
 const useStyle = makeStyles((theme) => ({
    root: {
@@ -60,17 +62,34 @@ const validationSchema = yup.object({
 function Signup(props) {
    const classes = useStyle();
    const router = useRouter();
+   const [open, setOpen] = React.useState(false);
 
+   const handleClick = () => {
+      setOpen(true);
+   };
+
+   const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+         return;
+      }
+
+      setOpen(false);
+   };
    const onSubmit = function (values) {
       console.log("this is done by it self");
       props.register(values, (error) => {
-         if (error) return;
+         if (error) return handleClick();
          router.replace("/");
       });
    };
 
    return (
       <div className={classes.root}>
+         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="error">
+               {props.error}
+            </Alert>
+         </Snackbar>
          <div className={classes.formDiv}>
             <Typography variant="h5" className={classes.typography}>
                SignUp
@@ -114,6 +133,7 @@ function Signup(props) {
                                     error={
                                        field.meta.error && field.meta.touched
                                     }
+                                    type='password'
                                     fullWidth
                                     size="small"
                                     label={

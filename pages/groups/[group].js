@@ -200,6 +200,9 @@ function Group(props) {
 									width: '100%',
 									backgroundColor: 'lightgrey'
 								}} height={50}/>
+								<Skeleton />
+								<Skeleton animation={false} />
+								<Skeleton animation="wave" />
 							</div> :
 							<div>
 								{groupContent.map((content, index) => {

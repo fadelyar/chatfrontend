@@ -136,6 +136,7 @@ function Login(props) {
 												}
 												fullWidth
 												size="small"
+												type='password'
 												label={
 													field.meta.error && field.meta.touched
 														? field.meta.error

@@ -11,6 +11,7 @@ import { register } from "../src/store/appstore/actions";
 import { useRouter } from "next/router";
 import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
+import CustomHeader from "../src/components/CustomHeader";
 
 const useStyle = makeStyles((theme) => ({
    root: {
@@ -85,6 +86,7 @@ function Signup(props) {
 
    return (
       <div className={classes.root}>
+         <CustomHeader/>
          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error">
                {props.error}
@@ -191,4 +193,10 @@ const mapDispatchToProps = function (dispatch) {
    };
 };
 
-export default connect(null, mapDispatchToProps)(Signup);
+const mapStateToProps = function (state) {
+   return {
+      error: state.appStore.error
+   };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

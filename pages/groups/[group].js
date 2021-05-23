@@ -100,9 +100,8 @@ const useStyle = makeStyles((theme) => ({
 function Group(props) {
    const router = useRouter();
    const classes = useStyle();
-   const theme = useTheme();
-   const matches = useMediaQuery(theme.breakpoints.up("sm"));
-   const [open, setOpen] = useState(!matches);
+   const matches = useMediaQuery("(min-width:600px)");
+   const [open, setOpen] = useState(matches);
    const [messages, setMessages] = useState([]);
    const [messageValue, setMessageValue] = useState("");
    const [expanded, setExpanded] = React.useState(false);

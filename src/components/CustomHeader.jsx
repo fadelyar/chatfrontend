@@ -90,6 +90,7 @@ function CustomHeader(props) {
 								<Button variant='contained' size='small' className={classes.button}
 										  onClick={() => {
 											  props.logOut(null)
+											  router.push('/login')
 										  }}
 										  classes={{
 											  label: classes.buttonLabel

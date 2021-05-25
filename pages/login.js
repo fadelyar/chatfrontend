@@ -87,7 +87,7 @@ function Login(props) {
 
 	return (
 		<div className={classes.root}>
-			{/*<CustomHeader/>*/}
+			<CustomHeader/>
 			<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
 				<Alert onClose={handleClose} severity="error">
 					{props.error}

@@ -161,6 +161,9 @@ function Group(props) {
 			});
 		}
 	}, [props.group]);
+	if (!props.currentUser) {
+		router.push('/login')
+	}
 	return (
 		<div>
 			<CssBaseline/>

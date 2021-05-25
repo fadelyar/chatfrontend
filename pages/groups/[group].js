@@ -11,7 +11,7 @@ import clsx from "clsx";
 import InputBase from "@material-ui/core/InputBase";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Divider from "@material-ui/core/Divider";
-import {Avatar, Button} from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import {connect} from "react-redux";
 import GroupIcon from "@material-ui/icons/CardMembership";
 import Accordion from "@material-ui/core/Accordion";
@@ -22,7 +22,7 @@ import SendIcon from "@material-ui/icons/SendRounded";
 import CustomDialog from "../../src/components/CustomDialog";
 import Tooltip from "@material-ui/core/Tooltip";
 import {io} from "socket.io-client";
-import Skeleton from '@material-ui/lab/Skeleton';
+import Skeleton from "@material-ui/lab/Skeleton";
 
 let socket = null;
 
@@ -94,6 +94,10 @@ const useStyle = makeStyles((theme) => ({
 			cursor: "pointer",
 		},
 	},
+	skeleton: {
+		width: '100%',
+		backgroundColor: 'lightgrey'
+	}
 }));
 
 function Group(props) {
@@ -105,7 +109,7 @@ function Group(props) {
 	const [expanded, setExpanded] = React.useState(false);
 	const [openDialog, setOpenDialog] = useState(false);
 	const [groupContent, setGroupContent] = useState([]);
-	const [groupContentLoaded, setGroupContentLoaded] = useState(true)
+	const [groupContentLoaded, setGroupContentLoaded] = useState(true);
 
 	const handleChange = (panel) => (event, isExpanded) => {
 		setExpanded(isExpanded ? panel : false);
@@ -148,7 +152,7 @@ function Group(props) {
 			});
 			socket.on("groupContent", (groupContent) => {
 				setGroupContent(groupContent);
-				setGroupContentLoaded(false)
+				setGroupContentLoaded(false);
 			});
 			socket.on("sendBack", (data) => {
 				setMessages((prev) => {
@@ -193,115 +197,114 @@ function Group(props) {
 				</div>
 				<Divider style={{backgroundColor: "lightgrey", height: 0.05}}/>
 				<div className={classes.drawerMain}>
-					{
-						groupContentLoaded ?
-							<div>
-								<Skeleton variant="rect" style={{
-									width: '100%',
-									backgroundColor: 'lightgrey'
-								}} height={50}/>
-								<Skeleton />
-								<Skeleton animation={false} />
-								<Skeleton animation="wave" />
-							</div> :
-							<div>
-								{groupContent.map((content, index) => {
-									return (
-										<div key={index} className={classes.groupDiv}>
-											<Accordion
-												expanded={expanded === content.name}
-												onChange={handleChange(content.name)}
-												style={{
-													backgroundColor: purple["900"],
-													width: "100%",
-													paddingTop: 5,
-												}}
+					{groupContentLoaded ? (
+						<div>
+
+							<Skeleton className={classes.skeleton}/>
+							<Skeleton animation={false} className={classes.skeleton}/>
+							<Skeleton animation="wave" className={classes.skeleton}/>
+						</div>
+					) : (
+						<div>
+							{groupContent.map((content, index) => {
+								return (
+									<div key={index} className={classes.groupDiv}>
+										<Accordion
+											expanded={expanded === content.name}
+											onChange={handleChange(content.name)}
+											style={{
+												backgroundColor: purple["900"],
+												width: "100%",
+												paddingTop: 5,
+											}}
+										>
+											<AccordionSummary
+												style={{height: "40px"}}
+												expandIcon={
+													<ExpandMoreIcon
+														style={{color: "white"}}
+													/>
+												}
+												aria-controls="panel1bh-content"
+												id="panel1bh-header"
 											>
-												<AccordionSummary
-													style={{height: "40px"}}
-													expandIcon={
-														<ExpandMoreIcon style={{color: "white"}}/>
-													}
-													aria-controls="panel1bh-content"
-													id="panel1bh-header"
-												>
-													<IconButton style={{color: "lightgrey"}}>
-														<GroupIcon fontSize="large"/>
-													</IconButton>
-													<div
-														style={{
-															display: "flex",
-															flexDirection: "column",
-															alignItems: "center",
-														}}
-													>
-														<Typography
-															variant="body1"
-															style={{
-																fontFamily: "Fira Code",
-																color: "lightgrey",
-															}}
-														>
-															{content.name}
-														</Typography>
-														<Typography
-															variant="caption"
-															style={{
-																fontFamily: "Fira Code",
-																fontWeight: "bold",
-																color: "lightgrey",
-															}}
-														>
-															{new Date(
-																content.dateCreated
-															).toLocaleTimeString()}
-														</Typography>
-													</div>
-												</AccordionSummary>
-												<AccordionDetails
+												<IconButton style={{color: "lightgrey"}}>
+													<GroupIcon fontSize="large"/>
+												</IconButton>
+												<div
 													style={{
 														display: "flex",
 														flexDirection: "column",
+														alignItems: "center",
 													}}
 												>
-													{content.users.map((member, index) => {
-														return (
-															<div
-																key={index}
+													<Typography
+														variant="body1"
+														style={{
+															fontFamily: "Fira Code",
+															color: "lightgrey",
+														}}
+													>
+														{content.name}
+													</Typography>
+													<Typography
+														variant="caption"
+														style={{
+															fontFamily: "Fira Code",
+															fontWeight: "bold",
+															color: "lightgrey",
+														}}
+													>
+														{new Date(
+															content.dateCreated
+														).toLocaleTimeString()}
+													</Typography>
+												</div>
+											</AccordionSummary>
+											<AccordionDetails
+												style={{
+													display: "flex",
+													flexDirection: "column",
+												}}
+											>
+												{content.users.map((member, index) => {
+													return (
+														<div
+															key={index}
+															style={{
+																paddingLeft: "30px",
+																marginBottom: 3,
+																display: "flex",
+																alignItems: "center",
+															}}
+														>
+															{/*<Avatar*/}
+															{/*   variant="rounded"*/}
+															{/*   style={{*/}
+															{/*      width: "20px",*/}
+															{/*      height: "20px",*/}
+															{/*      marginRight: 10,*/}
+															{/*   }}*/}
+															{/*></Avatar>*/}
+															<Typography
+																variant="overline"
 																style={{
-																	paddingLeft: "30px",
-																	marginBottom: 3,
-																	display: "flex",
-																	alignItems: "center",
+																	color: "lightgrey",
+																	fontFamily: "Fira Code",
 																}}
 															>
-																<Avatar
-																	variant="rounded"
-																	style={{
-																		width: "20px",
-																		height: "20px",
-																		marginRight: 10,
-																	}}
-																></Avatar>
-																<Typography
-																	variant="overline"
-																	style={{
-																		color: "lightgrey",
-																		fontFamily: "Fira Code",
-																	}}
-																>
-																	{member.name}
-																</Typography>
-															</div>
-														);
-													})}
-												</AccordionDetails>
-											</Accordion>
-										</div>
-									);
-								})}
-							</div>
-					}
+																{member.name}
+															</Typography>
+														</div>
+													);
+												})}
+											</AccordionDetails>
+										</Accordion>
+									</div>
+								);
+							})}
+						</div>
+					)}
 					<div style={{flexGrow: 1}}/>
 					<Button variant="contained" onClick={handleJoin}>
 						Join
@@ -410,7 +413,7 @@ export async function getServerSideProps(context) {
 const mapStateToProps = function (state) {
 	return {
 		currentUser: state.appStore.currentUser,
-		loaded: state.appStore.loaded
+		loaded: state.appStore.loaded,
 	};
 };
 

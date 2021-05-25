@@ -65,12 +65,6 @@ function CustomHeader(props) {
 	const classes = useStyle()
 	const router = useRouter()
 
-	useEffect(() => {
-		if (!props.currentUser) {
-			router.replace('/login')
-		}
-	}, [])
-
 	return (
 		<ThemeProvider theme={theme}>
 			<AppBar position='fixed'

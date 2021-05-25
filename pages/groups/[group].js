@@ -330,8 +330,8 @@ function Group(props) {
 									display: "flex",
 									justifyContent:
 										props.currentUser.id === message.userId
-											? "flex-start"
-											: "flex-end",
+											? "flex-end"
+											: "flex-start",
 									height: "40px",
 								}}
 							>

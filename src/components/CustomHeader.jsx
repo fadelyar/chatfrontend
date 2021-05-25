@@ -94,7 +94,7 @@ function CustomHeader(props) {
 										  classes={{
 											  label: classes.buttonLabel
 										  }}>
-
+									Logout
 								</Button> :
 								<React.Fragment>
 									<Button variant='contained' size='small' className={classes.button}

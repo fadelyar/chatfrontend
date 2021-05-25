@@ -23,6 +23,7 @@ import CustomDialog from "../../src/components/CustomDialog";
 import Tooltip from "@material-ui/core/Tooltip";
 import {io} from "socket.io-client";
 import Skeleton from "@material-ui/lab/Skeleton";
+import CustomAvatar from '../../src/components/CustomAvatar'
 
 let socket = null;
 
@@ -289,11 +290,13 @@ function Group(props) {
 															{/*      marginRight: 10,*/}
 															{/*   }}*/}
 															{/*></Avatar>*/}
+															<CustomAvatar src={'/man.png'}/>
 															<Typography
 																variant="overline"
 																style={{
 																	color: "lightgrey",
 																	fontFamily: "Fira Code",
+																	fontWeight: 'bold'
 																}}
 															>
 																{member.name}

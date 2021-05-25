@@ -1,4 +1,4 @@
-import {USER_FAILED_REQUEST, USER_MADE_REQUEST, USER_SUCCESS_REQUEST,} from "./actiontype";
+import {USER_FAILED_REQUEST, USER_MADE_REQUEST, USER_SUCCESS_REQUEST,USER_LOGOUT_REQUEST} from "./actiontype";
 import axios from "axios";
 
 const madeRequest = function () {
@@ -22,7 +22,10 @@ const madeFailedRequest = function (error) {
 };
 
 export const logOut = function (currentMember) {
-   madeSuccessRequest(currentMember)
+	return {
+		type: USER_LOGOUT_REQUEST,
+		payload: currentMember
+	}
 }
 
 // login user to database

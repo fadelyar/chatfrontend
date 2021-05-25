@@ -141,7 +141,7 @@ const mapStateToProps = function (state) {
 }
 const mapDispatchToProps = function (dispatch) {
 	return {
-		logOut: (currentUser) => logOut(currentUser)
+		logOut: (currentUser) => dispatch(logOut(currentUser))
 	}
 }
 

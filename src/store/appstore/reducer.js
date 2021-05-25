@@ -1,6 +1,7 @@
 import {
    USER_FAILED_REQUEST, USER_MADE_REQUEST,
-   USER_SUCCESS_REQUEST, 
+   USER_SUCCESS_REQUEST,
+   USER_LOGOUT_REQUEST
 } from "./actiontype"
 
 const initialState = {
@@ -17,6 +18,8 @@ export const appStoreReducer = function (state = initialState, { type, payload }
          return { ...state, loaded: false, currentUser: payload }
       case USER_FAILED_REQUEST:
          return { ...state, loaded: false, error: payload }
+      case USER_LOGOUT_REQUEST:
+         return {...state, loaded: false, currentUser: payload}
       default:
          return state
    }

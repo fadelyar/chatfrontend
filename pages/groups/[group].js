@@ -407,7 +407,7 @@ export async function getServerSideProps(context) {
 	const response =
 		// 	// await axios.get(`http://localhost:8000/chatapi/get30messages/${group}/`)
 		await axios.get(
-			`https://chat-rest-api-backend.herokuapp.com/chat/getlast30messages/${group}`
+			`https://live-chat-application-simple.herokuapp.com/chat/getlast30messages/${group}`
 		);
 
 	const data = response.data;

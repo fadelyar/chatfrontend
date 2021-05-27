@@ -137,9 +137,9 @@ function Group(props) {
 		if (event.charCode == 13) {
 			socket.emit("sendMessage", messageValue);
 			setMessageValue("");
+			console.log('messages--->', messages)
+			console.log('id---->', props.currentUser.id)
 		}
-      console.log('messages--->', messages)
-      console.log('id---->', props.currentUser.id)
 	};
 	const handleJoin = function () {
 		setOpenDialog(true);

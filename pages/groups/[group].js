@@ -138,6 +138,8 @@ function Group(props) {
 			socket.emit("sendMessage", messageValue);
 			setMessageValue("");
 		}
+      console.log('messages--->', messages)
+      console.log('id---->', props.currentUser.id)
 	};
 	const handleJoin = function () {
 		setOpenDialog(true);
@@ -355,7 +357,7 @@ function Group(props) {
 							>
 								<Tooltip
 									title={new Date(
-										message.dataCreated
+										message.dateCreated
 									).toLocaleTimeString()}
 									arrow
 								>

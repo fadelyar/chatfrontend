@@ -28,6 +28,7 @@ import axios from "axios";
 import Link from "next/link";
 import Badge from "@material-ui/core/Badge";
 import MailIcon from '@material-ui/icons/Mail'
+import CustomPopper from "../../src/components/CustomPopper";
 
 let socket = null;
 
@@ -121,6 +122,19 @@ function Group(props) {
 	const [openDialog, setOpenDialog] = useState(false);
 	const [groupContent, setGroupContent] = useState([]);
 	const [groupContentLoaded, setGroupContentLoaded] = useState(true);
+	const [privateMessages, setPrivateMessages] = useState([])
+
+	const [openPopper, setOpenPopper] = React.useState(false)
+	const [anchorEl, setAnchorEl] = React.useState(null);
+
+	const handleClick = (event) => {
+		setAnchorEl(event.currentTarget);
+		setOpenPopper(true)
+	};
+	const handleClose = function (event) {
+		setAnchorEl(null);
+		setOpenPopper(false)
+	}
 
 	const handleChange = (panel) => (event, isExpanded) => {
 		setExpanded(isExpanded ? panel : false);
@@ -311,6 +325,7 @@ function Group(props) {
 																	color: "lightgrey",
 																	fontFamily: "monospaces",
 																	fontWeight: "bold",
+																	marginRight: '5px'
 																}}
 															>
 																{member.name}
@@ -413,6 +428,8 @@ function Group(props) {
 					/>
 				</div>
 			</div>
+			<CustomPopper open={openPopper} handleClose={handleClose}
+							  anchorEl={anchorEl}/>
 		</div>
 	);
 }

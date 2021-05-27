@@ -137,8 +137,6 @@ function Group(props) {
 		if (event.charCode == 13) {
 			socket.emit("sendMessage", messageValue);
 			setMessageValue("");
-			console.log('messages--->', messages)
-			console.log('id---->', props.currentUser.id)
 		}
 	};
 	const handleJoin = function () {
@@ -253,9 +251,10 @@ function Group(props) {
 													}}
 												>
 													<Link href={`/groups/${content.name}`}
-															className={classes.link}>
+													>
 														<Typography
 															variant="body1"
+															className={classes.link}
 															style={{
 																fontFamily: "Fira Code",
 																color: "lightgrey",
@@ -367,7 +366,7 @@ function Group(props) {
 											fontFamily: "Fira Code",
 											borderRadius: 10,
 											backgroundColor:
-												props.currentUser.id === message.userId
+												props.currentUser.name === message.user.name
 													? "white"
 													: purple["600"],
 											color:

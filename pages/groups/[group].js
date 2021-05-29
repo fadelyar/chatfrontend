@@ -129,8 +129,8 @@ function Group(props) {
 		setOpenedUsers(openedUsers.filter((user) => user.id !== id))
 	}
 
-	const addOpenedUser = function (event, id) {
-		event.stopPropagation()
+	const addOpenedUser = function (id) {
+		// event.stopPropagation()
 		setOpenedUsers(prevState => {
 			return [...prevState,
 				{element: <CustomPopper handleClose={deleteOpenedUser} id={id}/>, id: id}
@@ -336,8 +336,8 @@ function Group(props) {
 															<Badge badgeContent={10} max={5} color='secondary'
 															>
 																<MailIcon onClick={
-																	(event, id) => {
-																		addOpenedUser(event, id)
+																	() => {
+																		addOpenedUser(member.id)
 																	}
 																}/>
 															</Badge>

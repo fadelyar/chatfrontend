@@ -11,7 +11,6 @@ import {InputBase} from "@material-ui/core";
 const useStyle = makeStyles((theme) => ({
 	root: {
 		display: "flex",
-		bottom: "30px",
 		width: "300px",
 		flexDirection: "column",
 		height: "450px",

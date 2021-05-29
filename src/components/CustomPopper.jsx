@@ -22,10 +22,12 @@ const useStyle = makeStyles((theme) => ({
 	headerDiv: {
 		display: "flex",
 		alignItems: "center",
+		padding: theme.spacing(1)
 	},
 	footerDiv: {
 		display: "flex",
 		alignItems: "center",
+		borderTop: '1px solid gray'
 	},
 	inputBase: {
 		borderTopLeftRadius: 0,
@@ -49,7 +51,7 @@ function CustomPopper(props) {
 			<div className={classes.headerDiv}>
 				<CustomAvatar src="/man.svg"/>
 				<div className={classes.flexGrow}/>
-				<IconButton size="small" onClick={props.handleClose}>
+				<IconButton onClick={props.handleClose}>
 					<CloseIcon/>
 				</IconButton>
 			</div>

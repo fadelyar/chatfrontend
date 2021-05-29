@@ -129,9 +129,10 @@ function Group(props) {
 
 	const handleClick = (event) => {
 		setOpenPopper(true)
-		setOpenedUsers(prevState => {
-			return [...prevState, <CustomPopper open={openPopper} handleClose={handleClose}/>]
-		})
+		// setOpenedUsers(prevState => {
+		// 	return [...prevState, <CustomPopper open={openPopper}
+		// 													handleClose={handleClose}/>]
+		// })
 	};
 	const handleClose = function (event) {
 		setOpenPopper(false)
@@ -333,7 +334,7 @@ function Group(props) {
 																{member.name}
 															</Typography>
 															<Badge badgeContent={10} max={5} color='secondary'
-																	 >
+															>
 																<MailIcon onClick={handleClick}/>
 															</Badge>
 														</div>
@@ -431,11 +432,10 @@ function Group(props) {
 					/>
 				</div>
 			</div>
-			{
-				openedUsers.map((User) => {
-					return User
-				})
-			}
+			<div>
+				<CustomPopper open={openPopper}
+								  handleClose={handleClose}/>
+			</div>
 		</div>
 	);
 }

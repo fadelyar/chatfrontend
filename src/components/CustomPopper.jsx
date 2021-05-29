@@ -56,7 +56,7 @@ function CustomPopper(props) {
                   <CloseIcon />
                </IconButton>
             </div>
-            <div className={classes.messageArea}></div>
+            <div className={classes.messageArea}/>
             <div className={classes.footerDiv}>
                <IconButton style={{ borderRadius: 0, color: purple["900"] }}>
                   <SendIcon />

@@ -7,6 +7,7 @@ import CloseIcon from "@material-ui/icons/CloseRounded";
 import SendIcon from "@material-ui/icons/SendRounded";
 import {purple} from "@material-ui/core/colors";
 import {InputBase} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 
 const useStyle = makeStyles((theme) => ({
 	root: {
@@ -52,6 +53,9 @@ function CustomPopper(props) {
 		<Paper className={classes.root}>
 			<div className={classes.headerDiv}>
 				<CustomAvatar src="../../man.png"/>
+				<Typography variant='h6'>
+					{props.name}
+				</Typography>
 				<div className={classes.flexGrow}/>
 				<IconButton onClick={
 					() => {

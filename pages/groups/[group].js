@@ -123,16 +123,17 @@ function Group(props) {
 	const [groupContent, setGroupContent] = useState([]);
 	const [groupContentLoaded, setGroupContentLoaded] = useState(true);
 	const [privateMessages, setPrivateMessages] = useState([])
+	const [openedUsers, setOpenedUsers] = useState([])
 
 	const [openPopper, setOpenPopper] = React.useState(false)
-	const [anchorEl, setAnchorEl] = React.useState(null);
 
 	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
 		setOpenPopper(true)
+		setOpenedUsers(prevState => {
+			return [...prevState, <CustomPopper open={open} handleClose={handleClose}/>]
+		})
 	};
 	const handleClose = function (event) {
-		setAnchorEl(null);
 		setOpenPopper(false)
 	}
 
@@ -155,6 +156,7 @@ function Group(props) {
 			setMessageValue("");
 		}
 	};
+
 	const handleJoin = function () {
 		setOpenDialog(true);
 	};
@@ -330,7 +332,8 @@ function Group(props) {
 															>
 																{member.name}
 															</Typography>
-															<Badge badgeContent={10} max={5} color='secondary'>
+															<Badge badgeContent={10} max={5} color='secondary'
+																	 onClick={handleClick}>
 																<MailIcon/>
 															</Badge>
 														</div>
@@ -428,8 +431,8 @@ function Group(props) {
 					/>
 				</div>
 			</div>
-			<CustomPopper open={openPopper} handleClose={handleClose}
-							  anchorEl={anchorEl}/>
+			{/*<CustomPopper open={openPopper} handleClose={handleClose}*/}
+			{/*				  anchorEl={anchorEl}/>*/}
 		</div>
 	);
 }

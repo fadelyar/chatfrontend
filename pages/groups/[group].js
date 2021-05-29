@@ -133,7 +133,7 @@ function Group(props) {
 		event.stopPropagation()
 		setOpenedUsers(prevState => {
 			return [...prevState,
-				{element: <CustomPopper handleClose={deleteOpenedUser} id={id}/>}
+				{element: <CustomPopper handleClose={deleteOpenedUser} id={id}/>, id: id}
 			]
 		})
 	}

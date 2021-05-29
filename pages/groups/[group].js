@@ -125,17 +125,14 @@ function Group(props) {
 	const [privateMessages, setPrivateMessages] = useState([])
 	const [openedUsers, setOpenedUsers] = useState([])
 
-	const [openPopper, setOpenPopper] = React.useState(false)
+	const deleteOpenedUser = function (index) {
+		// setOpenedUsers(openedUsers.filter((user) => user))
+	}
 
-	const handleClick = (event) => {
-		setOpenPopper(true)
-		// setOpenedUsers(prevState => {
-		// 	return [...prevState, <CustomPopper open={openPopper}
-		// 													handleClose={handleClose}/>]
-		// })
-	};
-	const handleClose = function (event) {
-		setOpenPopper(false)
+	const addOpenedUser = function () {
+		setOpenedUsers(prevState => {
+			return [...prevState, <CustomPopper handleClose={deleteOpenedUser}/>]
+		})
 	}
 
 	const handleChange = (panel) => (event, isExpanded) => {
@@ -432,9 +429,10 @@ function Group(props) {
 					/>
 				</div>
 			</div>
-			<div>
-				<CustomPopper open={openPopper}
-								  handleClose={handleClose}/>
+			<div style={{position: 'absolute', display: 'flex'}}>
+				{
+					openedUsers
+				}
 			</div>
 		</div>
 	);

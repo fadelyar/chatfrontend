@@ -14,6 +14,7 @@ const useStyle = makeStyles((theme) => ({
 		width: "300px",
 		flexDirection: "column",
 		height: "450px",
+		minWidth: '250px'
 	},
 	messageArea: {
 		flexGrow: 1,
@@ -51,7 +52,11 @@ function CustomPopper(props) {
 			<div className={classes.headerDiv}>
 				<CustomAvatar src="../../man.png"/>
 				<div className={classes.flexGrow}/>
-				<IconButton onClick={props.handleClose}>
+				<IconButton onClick={
+					() => {
+						props.handleClose(props.id)
+					}
+				}>
 					<CloseIcon/>
 				</IconButton>
 			</div>

@@ -430,7 +430,7 @@ function Group(props) {
 					/>
 				</div>
 			</div>
-			<div style={{position: 'absolute', display: 'flex'}}>
+			<div style={{position: 'fixed', display: 'flex', bottom: '10px'}}>
 				{
 					openedUsers
 				}

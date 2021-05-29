@@ -126,10 +126,6 @@ function Group(props) {
 	const [openedUsers, setOpenedUsers] = useState([])
 
 	const deleteOpenedUser = function (name) {
-		// // setOpenedUsers(openedUsers.map((user) => {
-		// // 	return user.name === name ? null : user
-		// // }))
-		// setOpenedUsers()
 		setOpenedUsers(prevState => {
 			return prevState.filter(user => user.name !== name)
 		})
@@ -137,6 +133,8 @@ function Group(props) {
 
 	const addOpenedUser = function (name) {
 		// event.stopPropagation()
+		const is = openedUsers.some((user) => user.name === name)
+		if (is) return
 		setOpenedUsers(prevState => {
 			return [...prevState,
 				{element: <CustomPopper handleClose={deleteOpenedUser} name={name}/>, name: name}

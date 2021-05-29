@@ -125,15 +125,15 @@ function Group(props) {
 	const [privateMessages, setPrivateMessages] = useState([])
 	const [openedUsers, setOpenedUsers] = useState([])
 
-	const deleteOpenedUser = function (id) {
-		setOpenedUsers(openedUsers.filter((user) => user.id !== id))
+	const deleteOpenedUser = function (name) {
+		setOpenedUsers(openedUsers.filter((user) => user.name !== name))
 	}
 
-	const addOpenedUser = function (id) {
+	const addOpenedUser = function (name) {
 		// event.stopPropagation()
 		setOpenedUsers(prevState => {
 			return [...prevState,
-				{element: <CustomPopper handleClose={deleteOpenedUser} id={id}/>, id: id}
+				{element: <CustomPopper handleClose={deleteOpenedUser} name={name}/>, name: name}
 			]
 		})
 	}
@@ -337,7 +337,8 @@ function Group(props) {
 															>
 																<MailIcon onClick={
 																	() => {
-																		addOpenedUser(member.id)
+																		console.log(member.name)
+																		addOpenedUser(member.name)
 																	}
 																}/>
 															</Badge>

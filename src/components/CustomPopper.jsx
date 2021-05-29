@@ -54,7 +54,7 @@ function CustomPopper(props) {
 				<div className={classes.flexGrow}/>
 				<IconButton onClick={
 					() => {
-						props.handleClose(props.id)
+						props.handleClose(props.name)
 					}
 				}>
 					<CloseIcon/>

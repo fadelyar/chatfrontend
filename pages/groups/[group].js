@@ -126,9 +126,13 @@ function Group(props) {
 	const [openedUsers, setOpenedUsers] = useState([])
 
 	const deleteOpenedUser = function (name) {
-		setOpenedUsers(openedUsers.map((user) => {
-			return user.name === name ? null : user
-		}))
+		// // setOpenedUsers(openedUsers.map((user) => {
+		// // 	return user.name === name ? null : user
+		// // }))
+		// setOpenedUsers()
+		setOpenedUsers(prevState => {
+			return prevState.filter(user => user.name !== name)
+		})
 	}
 
 	const addOpenedUser = function (name) {

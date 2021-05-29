@@ -333,8 +333,8 @@ function Group(props) {
 																{member.name}
 															</Typography>
 															<Badge badgeContent={10} max={5} color='secondary'
-																	 onClick={handleClick}>
-																<MailIcon/>
+																	 >
+																<MailIcon onClick={handleClick}/>
 															</Badge>
 														</div>
 													);

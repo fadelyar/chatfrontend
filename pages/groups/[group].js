@@ -431,8 +431,11 @@ function Group(props) {
 					/>
 				</div>
 			</div>
-			{/*<CustomPopper open={openPopper} handleClose={handleClose}*/}
-			{/*				  anchorEl={anchorEl}/>*/}
+			{
+				openedUsers.map((User) => {
+					return User
+				})
+			}
 		</div>
 	);
 }

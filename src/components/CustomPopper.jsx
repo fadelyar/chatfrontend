@@ -14,7 +14,8 @@ const useStyle = makeStyles((theme) => ({
 		width: "300px",
 		flexDirection: "column",
 		height: "450px",
-		minWidth: '250px'
+		minWidth: '250px',
+		marginLeft: theme.spacing(0.5)
 	},
 	messageArea: {
 		flexGrow: 1,

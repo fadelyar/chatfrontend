@@ -432,6 +432,7 @@ function Group(props) {
 			</div>
 			<div style={{
 				position: 'fixed', display: 'flex',
+				width: '100%',
 				bottom: '43px', justifyContent: 'flex-end', border: '5px solid red'
 			}}>
 				{

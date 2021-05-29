@@ -129,7 +129,8 @@ function Group(props) {
 		// setOpenedUsers(openedUsers.filter((user) => user))
 	}
 
-	const addOpenedUser = function () {
+	const addOpenedUser = function (event) {
+		event.stopPropagation()
 		setOpenedUsers(prevState => {
 			return [...prevState, <CustomPopper handleClose={deleteOpenedUser}/>]
 		})
@@ -332,7 +333,7 @@ function Group(props) {
 															</Typography>
 															<Badge badgeContent={10} max={5} color='secondary'
 															>
-																<MailIcon onClick={handleClick}/>
+																<MailIcon onClick={addOpenedUser}/>
 															</Badge>
 														</div>
 													);

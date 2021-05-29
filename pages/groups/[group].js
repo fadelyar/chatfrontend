@@ -130,7 +130,7 @@ function Group(props) {
 	const handleClick = (event) => {
 		setOpenPopper(true)
 		setOpenedUsers(prevState => {
-			return [...prevState, <CustomPopper open={open} handleClose={handleClose}/>]
+			return [...prevState, <CustomPopper open={openPopper} handleClose={handleClose}/>]
 		})
 	};
 	const handleClose = function (event) {

@@ -97,7 +97,7 @@ function CustomPopper(props) {
 										padding: 5,
 									}}
 								>
-									{message.content}
+									{message.user.name}
 								</Typography>
 							</div>
 						)

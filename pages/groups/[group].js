@@ -127,7 +127,7 @@ function Group(props) {
 	const [privateMessageValue, setPrivateMessageValue] = useState('')
 
 	const handlePrivateMessageValue = function (event) {
-		setPrivateMessageValue(event.target.value)
+		setPrivateMessageValue(event.currentTarget.value)
 	}
 
 	const deleteOpenedUser = function (name) {
@@ -163,10 +163,6 @@ function Group(props) {
 	};
 
 	const messagesDivRef = useRef(null);
-
-
-
-
 
 
 	const closeOpen = () => setOpen(false);

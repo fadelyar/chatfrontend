@@ -20,6 +20,7 @@ const useStyle = makeStyles((theme) => ({
 	},
 	messageArea: {
 		flexGrow: 1,
+		backgroundColor: 'gray'
 	},
 	headerDiv: {
 		display: "flex",

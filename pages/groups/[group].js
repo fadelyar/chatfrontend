@@ -321,11 +321,7 @@ function Group(props) {
 															</Typography>
 															<Badge badgeContent={10} max={5} color='secondary'
 															>
-																<MailIcon onClick={
-																	() => {
-																		addOpenedUser(member.name)
-																	}
-																}/>
+																<MailIcon/>
 															</Badge>
 														</div>
 													);

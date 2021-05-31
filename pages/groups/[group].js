@@ -134,7 +134,7 @@ function Group(props) {
 	const addOpenedUser = function (name) {
 		// event.stopPropagation()
 		const is = openedUsers.some((user) => user.name === name)
-		if (is && openedUsers.length > 3) return
+		if (is || openedUsers.length > 3) return
 		setOpenedUsers(prevState => {
 			return [...prevState,
 				{element: <CustomPopper handleClose={deleteOpenedUser} name={name}/>, name: name}

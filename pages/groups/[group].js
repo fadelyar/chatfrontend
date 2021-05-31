@@ -124,6 +124,11 @@ function Group(props) {
 	const [groupContentLoaded, setGroupContentLoaded] = useState(true);
 	const [privateMessages, setPrivateMessages] = useState([])
 	const [openedUsers, setOpenedUsers] = useState([])
+	const [privateMessageValue, setPrivateMessageValue] = useState('')
+
+	const handlePrivateMessageValue = function (event) {
+		setPrivateMessages(event.target.value)
+	}
 
 	const deleteOpenedUser = function (name) {
 		setOpenedUsers(prevState => {
@@ -137,9 +142,16 @@ function Group(props) {
 		if (is || openedUsers.length > 3) return
 		setOpenedUsers(prevState => {
 			return [...prevState,
-				{element: <CustomPopper handleClose={deleteOpenedUser} name={name}/>, name: name}
+				{element: <CustomPopper handlePrivateMessage={handlePrivateMessageValue}
+												handleClose={deleteOpenedUser}
+												sendPrivateMessage={sendPrivateMessage}
+												name={name}/>, name: name}
 			]
 		})
+	}
+
+	const sendPrivateMessage = function () {
+		socket.emit('privateMessage', privateMessageValue)
 	}
 
 	const handleChange = (panel) => (event, isExpanded) => {

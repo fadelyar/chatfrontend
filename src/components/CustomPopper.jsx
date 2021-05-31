@@ -67,10 +67,11 @@ function CustomPopper(props) {
 			</div>
 			<div className={classes.messageArea}/>
 			<div className={classes.footerDiv}>
-				<IconButton style={{borderRadius: 0, color: purple["900"]}}>
+				<IconButton style={{borderRadius: 0, color: purple["900"]}}
+								onClick={props.sendPrivateMessage}>
 					<SendIcon/>
 				</IconButton>
-				<InputBase className={classes.inputBase}/>
+				<InputBase className={classes.inputBase} onChange={props.handlePrivateMessage}/>
 			</div>
 		</Paper>
 	);

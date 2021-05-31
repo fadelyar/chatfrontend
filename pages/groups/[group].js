@@ -212,6 +212,7 @@ function Group(props) {
 				});
 			});
 			socket.on('sendPrivateMessageBack', (data) => {
+				console.log('this is place very importent')
 				setPrivateMessages(prevState => {
 					return [...prevState, data]
 				})

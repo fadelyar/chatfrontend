@@ -127,7 +127,6 @@ function Group(props) {
 	const [privateMessageValue, setPrivateMessageValue] = useState('')
 
 	const handlePrivateMessageValue = function (event) {
-		console.log('value has been changed!')
 		setPrivateMessageValue(event.currentTarget.value)
 	}
 
@@ -156,7 +155,6 @@ function Group(props) {
 	}
 
 	const sendPrivateMessage = function (id) {
-		console.log('send button has been pressed!')
 		socket.emit('privateMessage', {message: privateMessageValue, id: id})
 	}
 

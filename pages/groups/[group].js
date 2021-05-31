@@ -156,6 +156,7 @@ function Group(props) {
 
 	const sendPrivateMessage = function (id) {
 		socket.emit('privateMessage', {message: privateMessageValue, id: id})
+		console.log('private messages -----> ', privateMessages)
 	}
 
 	const handleChange = (panel) => (event, isExpanded) => {

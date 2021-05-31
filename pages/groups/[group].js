@@ -127,7 +127,7 @@ function Group(props) {
 	const [privateMessageValue, setPrivateMessageValue] = useState('')
 
 	const handlePrivateMessageValue = function (event) {
-		setPrivateMessages(event.target.value)
+		setPrivateMessageValue(event.target.value)
 	}
 
 	const deleteOpenedUser = function (name) {
@@ -142,16 +142,20 @@ function Group(props) {
 		if (is || openedUsers.length > 3) return
 		setOpenedUsers(prevState => {
 			return [...prevState,
-				{element: <CustomPopper handlePrivateMessage={handlePrivateMessageValue}
-												handleClose={deleteOpenedUser}
-												sendPrivateMessage={sendPrivateMessage}
-												name={name}/>, name: name}
+				{
+					element: <CustomPopper handlePrivateMessage={handlePrivateMessageValue}
+												  handleClose={deleteOpenedUser}
+												  sendPrivateMessage={sendPrivateMessage}
+												  value={privateMessageValue}
+												  messages={privateMessages}
+												  name={name}/>, name: name
+				}
 			]
 		})
 	}
 
-	const sendPrivateMessage = function () {
-		socket.emit('privateMessage', privateMessageValue)
+	const sendPrivateMessage = function (id) {
+		socket.emit('privateMessage', {message: privateMessageValue, id: id})
 	}
 
 	const handleChange = (panel) => (event, isExpanded) => {
@@ -159,6 +163,11 @@ function Group(props) {
 	};
 
 	const messagesDivRef = useRef(null);
+
+
+
+
+
 
 	const closeOpen = () => setOpen(false);
 	const openOpen = () => setOpen(true);
@@ -205,6 +214,11 @@ function Group(props) {
 					return [...prev, data];
 				});
 			});
+			socket.on('sendPrivateMessageBack', (data) => {
+				setPrivateMessages(prevState => {
+					return [...prevState, data]
+				})
+			})
 		}
 	}, [props.group]);
 	if (!props.currentUser) {
@@ -353,7 +367,6 @@ function Group(props) {
 															>
 																<MailIcon onClick={
 																	() => {
-																		console.log(member.name)
 																		addOpenedUser(member.name)
 																	}
 																}/>

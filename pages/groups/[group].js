@@ -216,6 +216,10 @@ function Group(props) {
 				setPrivateMessages((prev) => {
 					return [...prev, data]
 				})
+				setMessages((prev) => {
+					return [...prev, data]
+				})
+
 			})
 		}
 	}, [props.group]);

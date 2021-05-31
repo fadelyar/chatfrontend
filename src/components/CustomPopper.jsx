@@ -81,23 +81,23 @@ function CustomPopper(props) {
 								  }}>
 								<Typography
 									variant="body2"
-									style={{
-										fontFamily: "Fira Code",
-										borderRadius: 10,
-										backgroundColor:
-											props.name === message.user.name
-												? "white"
-												: purple["600"],
-										color:
-											props.name === message.user.name
-												? "black"
-												: "white",
-										alignItems: "center",
-										marginTop: 5,
-										padding: 5,
-									}}
+									// style={{
+									// 	fontFamily: "Fira Code",
+									// 	borderRadius: 10,
+									// 	backgroundColor:
+									// 		props.name === message.user.name
+									// 			? "white"
+									// 			: purple["600"],
+									// 	color:
+									// 		props.name === message.user.name
+									// 			? "black"
+									// 			: "white",
+									// 	alignItems: "center",
+									// 	marginTop: 5,
+									// 	padding: 5,
+									// }}
 								>
-									{message.user.name}
+									{JSON.stringify(message, null, 2)}
 								</Typography>
 							</div>
 						)

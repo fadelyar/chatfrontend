@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import store from '../src/store/store'
-import { PersistGate } from 'redux-persist/integration/react'
-import { useStore } from "react-redux";
+import {PersistGate} from 'redux-persist/integration/react'
+import {useStore} from "react-redux";
+import Loader from "../src/components/Loader";
 
 function MyApp(props) {
-	const { Component, pageProps } = props;
+	const {Component, pageProps} = props;
 	const store = useStore((state) => state);
 
 	React.useEffect(() => {
@@ -21,9 +22,9 @@ function MyApp(props) {
 		<React.Fragment>
 			<Head>
 				<title>My page</title>
-				<meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+				<meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
 			</Head>
-			<PersistGate persistor={store.__persistor} loading={<div>Loading</div>}>
+			<PersistGate persistor={store.__persistor} loading={<Loader/>}>
 				<Component {...pageProps} />
 			</PersistGate>
 		</React.Fragment>

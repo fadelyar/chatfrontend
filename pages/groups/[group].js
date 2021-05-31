@@ -112,6 +112,8 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 function Group(props) {
+	const messagesDivRef = useRef(null);
+
 	const router = useRouter();
 	const classes = useStyle();
 	const [open, setOpen] = useState(true);
@@ -122,21 +124,16 @@ function Group(props) {
 	const [groupContent, setGroupContent] = useState([]);
 	const [groupContentLoaded, setGroupContentLoaded] = useState(true);
 
-
 	const handleChange = (panel) => (event, isExpanded) => {
 		setExpanded(isExpanded ? panel : false);
 	};
 
-	const messagesDivRef = useRef(null);
-
-
 	const closeOpen = () => setOpen(false);
 	const openOpen = () => setOpen(true);
-	const hadnleMessageValue = function (event) {
+	const handleMessageValue = function (event) {
 		setMessageValue(event.currentTarget.value);
 	};
 	const sendMessage = function (event) {
-		// console.log(event.target.value);
 		if (event.target.value.length === 0) return;
 		if (event.charCode == 13) {
 			socket.emit("sendMessage", messageValue);
@@ -412,7 +409,7 @@ function Group(props) {
 					</IconButton>
 					<InputBase
 						className={classes.inputBase}
-						onChange={hadnleMessageValue}
+						onChange={handleMessageValue}
 						value={messageValue}
 						onKeyPress={sendMessage}
 					/>
@@ -425,7 +422,6 @@ function Group(props) {
 export async function getServerSideProps(context) {
 	const {group} = context.params;
 	const response =
-		// 	// await axios.get(`http://localhost:8000/chatapi/get30messages/${group}/`)
 		await axios.get(
 			`https://live-chat-application-simple.herokuapp.com/chat/getlast30messages/${group}`
 		);

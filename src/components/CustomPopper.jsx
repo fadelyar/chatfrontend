@@ -67,6 +67,8 @@ function CustomPopper(props) {
 				</IconButton>
 			</div>
 			<div className={classes.messageArea}>
+				<h2 style={{color: 'white'}}>				{JSON.stringify(props.messages, null, 2)}
+				</h2>
 				{
 					props.messages.map((message, index) => {
 						return (

@@ -28,7 +28,6 @@ import axios from "axios";
 import Link from "next/link";
 import Badge from "@material-ui/core/Badge";
 import MailIcon from '@material-ui/icons/Mail'
-import CustomPopper from "../../src/components/CustomPopper";
 
 let socket = null;
 
@@ -122,41 +121,7 @@ function Group(props) {
 	const [openDialog, setOpenDialog] = useState(false);
 	const [groupContent, setGroupContent] = useState([]);
 	const [groupContentLoaded, setGroupContentLoaded] = useState(true);
-	const [privateMessages, setPrivateMessages] = useState([])
-	const [openedUsers, setOpenedUsers] = useState([])
-	const [privateMessageValue, setPrivateMessageValue] = useState('')
 
-	const handlePrivateMessageValue = function (event) {
-		setPrivateMessageValue(event.currentTarget.value)
-	}
-
-	const deleteOpenedUser = function (name) {
-		setOpenedUsers(prevState => {
-			return prevState.filter(user => user.name !== name)
-		})
-	}
-
-	const addOpenedUser = function (name) {
-		// event.stopPropagation()
-		const is = openedUsers.some((user) => user.name === name)
-		if (is || openedUsers.length > 3) return
-		setOpenedUsers(prevState => {
-			return [...prevState,
-				{
-					element: <CustomPopper handlePrivateMessage={handlePrivateMessageValue}
-												  handleClose={deleteOpenedUser}
-												  sendPrivateMessage={sendPrivateMessage}
-												  value={privateMessageValue}
-												  messages={privateMessages}
-												  name={name}/>, name: name
-				}
-			]
-		})
-	}
-
-	const sendPrivateMessage = function (id) {
-		socket.emit('privateMessage', {message: privateMessageValue, id: id})
-	}
 
 	const handleChange = (panel) => (event, isExpanded) => {
 		setExpanded(isExpanded ? panel : false);
@@ -210,12 +175,6 @@ function Group(props) {
 					return [...prev, data];
 				});
 			});
-			socket.on('sendPrivateMessageBack', (data) => {
-				console.log('this is place very importent', data)
-				setPrivateMessages((prev) => {
-					return [...prev, data]
-				})
-			})
 		}
 	}, [props.group]);
 	if (!props.currentUser) {
@@ -237,9 +196,6 @@ function Group(props) {
 			>
 				<div className={classes.drawerHeader}>
 					<Typography
-						onMouseOver={() => {
-							console.log('private messages', privateMessages)
-						}}
 						variant="h6"
 						style={{
 							color: "white",
@@ -465,17 +421,6 @@ function Group(props) {
 						onKeyPress={sendMessage}
 					/>
 				</div>
-			</div>
-			<div style={{
-				position: 'fixed', display: 'flex',
-				width: '100%',
-				bottom: '43px', justifyContent: 'flex-end'
-			}}>
-				{
-					openedUsers.map((user) => {
-						return user.element
-					})
-				}
 			</div>
 		</div>
 	);

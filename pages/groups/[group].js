@@ -215,11 +215,6 @@ function Group(props) {
 				setPrivateMessages((prev) => {
 					return [...prev, data]
 				})
-				setMessages((prev) => {
-					return [...prev, data]
-				})
-				console.log('messages', messages)
-				console.log('privateMessages', privateMessages)
 			})
 		}
 	}, [props.group]);
@@ -242,6 +237,9 @@ function Group(props) {
 			>
 				<div className={classes.drawerHeader}>
 					<Typography
+						onMouseOver={() => {
+							console.log('private messages', privateMessages)
+						}}
 						variant="h6"
 						style={{
 							color: "white",

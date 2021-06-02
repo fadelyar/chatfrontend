@@ -206,23 +206,11 @@ function Group(props) {
 				console.log('from another place privateContent--->', privateContent)
 			});
 			socket.on('sendBackPrivateMessage', (data) => {
-				// if (!group) {
-				// 	setPrivateContent(prevState => {
-				// 		return [...prevState, {userName: data.receiver, messages: []}]
-				// 	})
-				// }
-				// setPrivateContent((prev) => {
-				// 	return prev.map((content) => {
-				// 		return content.userName !== group.userName
-				// 			? content : content.messages.concat(data.message)
-				// 	})
-				// })
 				console.log('data', data)
 				setPrivateContent((prev) => {
 					const newArray = prev.find((content) => content.userName === data.receiver)
 					const updatedArray = prev.map((user) => {
 						if (user.userName === newArray.userName) {
-							console.log('if clause happened!')
 							user.messages = user.messages.concat(data.message)
 							return user
 						}
@@ -230,9 +218,6 @@ function Group(props) {
 					})
 					return updatedArray
 				})
-				// setPrivateContent((prev) => {
-				// 	return [...prev, {}]
-				// })
 			})
 		}
 	}, [props.group]);

@@ -205,6 +205,11 @@ function Group(props) {
 				console.log('group---->', group)
 				console.log('privateGroup---->', privateContent)
 				console.log('data---->', data)
+				if (!group) {
+					setPrivateContent(prevState => {
+						return [...prevState, {userName: data.receiver, messages: []}]
+					})
+				}
 				// setPrivateContent((prev) => {
 				// 	return prev.map((content) => {
 				// 		return content.userName !== group.userName

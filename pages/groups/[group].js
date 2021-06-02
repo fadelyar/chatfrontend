@@ -249,6 +249,9 @@ function Group(props) {
 							paddingLeft: 13,
 							fontFamily: "Fira Code",
 						}}
+						onMouseOver={() => {
+							console.log('private content', privateContent)
+						}}
 					>
 						Chat Groups
 					</Typography>

@@ -205,8 +205,6 @@ function Group(props) {
 				console.log('from another place privateContent--->', privateContent)
 			});
 			socket.on('sendBackPrivateMessage', (data) => {
-				const group = privateContent.find((content) => content.userName === data.receiver)
-				printPrivate()
 				// if (!group) {
 				// 	setPrivateContent(prevState => {
 				// 		return [...prevState, {userName: data.receiver, messages: []}]
@@ -220,7 +218,10 @@ function Group(props) {
 				// })
 				setPrivateContent((prev) => {
 					console.log('this is cool', prev)
-					return [...prev, {userName: 'wow', messages: []}]
+					return prev.map((content) => {
+						return content.userName !== data.receiver
+							? content : content.messages.concat(data.message)
+					})
 				})
 			})
 		}

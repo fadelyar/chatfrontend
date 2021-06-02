@@ -169,10 +169,6 @@ function Group(props) {
 		}
 	};
 
-	const printPrivate = function () {
-		console.log('privateContent', privateContent)
-	}
-
 	const handleJoin = function () {
 		setOpenDialog(true);
 	};
@@ -209,6 +205,11 @@ function Group(props) {
 				console.log('data', data)
 				setPrivateContent((prev) => {
 					const newArray = prev.find((content) => content.userName === data.receiver)
+					if (!newArray) {
+						setPrivateContent(prevState => {
+							return [...prevState, {userName: data.receiver, messages: []}]
+						})
+					}
 					const updatedArray = prev.map((user) => {
 						if (user.userName === newArray.userName) {
 							user.messages = user.messages.concat(data.message)

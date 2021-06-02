@@ -218,11 +218,10 @@ function Group(props) {
 				// })
 				console.log('data', data)
 				setPrivateContent((prev) => {
-					console.log('this is cool', prev)
 					const newArray = prev.find((content) => content.userName === data.receiver)
-					console.log('newArray', newArray)
 					const updatedArray = prev.map((user) => {
 						if (user.userName === newArray.userName) {
+							console.log('if clause happened!')
 							user.messages.concat(data.message)
 							return user
 						}
@@ -230,6 +229,9 @@ function Group(props) {
 					})
 					return updatedArray
 				})
+				// setPrivateContent((prev) => {
+				// 	return [...prev, {}]
+				// })
 			})
 		}
 	}, [props.group]);

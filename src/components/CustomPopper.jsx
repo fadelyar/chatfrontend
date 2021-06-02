@@ -66,7 +66,7 @@ function CustomPopper(props) {
 					<CloseIcon/>
 				</IconButton>
 			</div>
-			<div className={classes.messageArea}>
+			{/*<div className={classes.messageArea}>*/}
 			{/*	{*/}
 			{/*		props.messages.map((message, index) => {*/}
 			{/*			return (*/}

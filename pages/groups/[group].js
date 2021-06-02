@@ -141,7 +141,10 @@ function Group(props) {
 	}
 
 	const sendPrivateMessage = function (id) {
-		socket.emit('privateMessage', {message: privateMessageValue, id: id})
+		socket.emit(
+			'privateMessage',
+			{message: privateMessageValue, sender: props.currentUser.name, receiver: id}
+		)
 	}
 
 	const handlePrivateMessage = function (event) {
@@ -197,11 +200,11 @@ function Group(props) {
 				});
 			});
 			socket.on('sendBackPrivateMessage', (data) => {
-				const group = privateContent.find((content) => content.userName === data.user.name)
+				const group = privateContent.find((content) => content.userName === data.receiver)
 				setGroupContent((prev) => {
 					return prev.map((content) => {
 						return content.userName !== group.userName
-							? content : content.messages.concat(data)
+							? content : content.messages.concat(data.message)
 					})
 				})
 			})

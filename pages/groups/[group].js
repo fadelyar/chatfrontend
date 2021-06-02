@@ -210,12 +210,12 @@ function Group(props) {
 						return [...prevState, {userName: data.receiver, messages: []}]
 					})
 				}
-				// setPrivateContent((prev) => {
-				// 	return prev.map((content) => {
-				// 		return content.userName !== group.userName
-				// 			? content : content.messages.concat(data.message)
-				// 	})
-				// })
+				setPrivateContent((prev) => {
+					return prev.map((content) => {
+						return content.userName !== group.userName
+							? content : content.messages.concat(data.message)
+					})
+				})
 			})
 		}
 	}, [props.group]);

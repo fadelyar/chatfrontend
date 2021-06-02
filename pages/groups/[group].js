@@ -199,16 +199,14 @@ function Group(props) {
 				setMessages((prev) => {
 					return [...prev, data];
 				});
-				console.log('from another place privateContent--->', privateContent)
 			});
 			socket.on('sendBackPrivateMessage', (data) => {
 				console.log('data', data)
+
 				setPrivateContent((prev) => {
 					const newArray = prev.find((content) => content.userName === data.receiver)
 					if (!newArray) {
-						setPrivateContent(prevState => {
-							return [...prevState, {userName: data.receiver, messages: []}]
-						})
+						openActiveUser(data.receiver)
 					}
 					const updatedArray = prev.map((user) => {
 						if (user.userName === newArray.userName) {

@@ -219,6 +219,7 @@ function Group(props) {
 				// 	})
 				// })
 				setPrivateContent((prev) => {
+					console.log('this is cool', prev)
 					return [...prev, {userName: 'wow', messages: []}]
 				})
 			})

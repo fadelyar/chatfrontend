@@ -203,6 +203,7 @@ function Group(props) {
 				const group = privateContent.find((content) => content.userName === data.receiver)
 				console.log('group---->', group)
 				console.log('privateGroup---->', privateContent)
+				console.log('data---->', data)
 				// setPrivateContent((prev) => {
 				// 	return prev.map((content) => {
 				// 		return content.userName !== group.userName

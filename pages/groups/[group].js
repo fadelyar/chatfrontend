@@ -168,6 +168,10 @@ function Group(props) {
 		}
 	};
 
+	const printPrivate = function () {
+		console.log('privateContent', privateContent)
+	}
+
 	const handleJoin = function () {
 		setOpenDialog(true);
 	};
@@ -202,20 +206,18 @@ function Group(props) {
 			});
 			socket.on('sendBackPrivateMessage', (data) => {
 				const group = privateContent.find((content) => content.userName === data.receiver)
-				console.log('group---->', group)
-				console.log('privateGroup---->', privateContent)
-				console.log('data---->', data)
-				if (!group) {
-					setPrivateContent(prevState => {
-						return [...prevState, {userName: data.receiver, messages: []}]
-					})
-				}
-				setPrivateContent((prev) => {
-					return prev.map((content) => {
-						return content.userName !== group.userName
-							? content : content.messages.concat(data.message)
-					})
-				})
+				printPrivate()
+				// if (!group) {
+				// 	setPrivateContent(prevState => {
+				// 		return [...prevState, {userName: data.receiver, messages: []}]
+				// 	})
+				// }
+				// setPrivateContent((prev) => {
+				// 	return prev.map((content) => {
+				// 		return content.userName !== group.userName
+				// 			? content : content.messages.concat(data.message)
+				// 	})
+				// })
 			})
 		}
 	}, [props.group]);

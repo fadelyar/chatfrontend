@@ -221,7 +221,14 @@ function Group(props) {
 					console.log('this is cool', prev)
 					const newArray = prev.find((content) => content.userName === data.receiver)
 					console.log('newArray', newArray)
-					return prev
+					const updatedArray = prev.map((user) => {
+						if (user.userName === newArray.userName) {
+							user.messages.concat(data.message)
+							return user
+						}
+						return user
+					})
+					return updatedArray
 				})
 			})
 		}

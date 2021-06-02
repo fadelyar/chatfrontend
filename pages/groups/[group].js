@@ -458,17 +458,17 @@ function Group(props) {
 				bottom: '45px'
 			}}>
 				{
-					// groupContent.map((group, index) => {
-					// 	return (
-					// 		<CustomPopper key={index} name={group.userName}
-					// 						  handleClose={closeActiveUser}
-					// 						  messages={group.messages}
-					// 						  value={privateMessageValue}
-					// 						  onChange={handlePrivateMessage}
-					// 						  sendPrivateMessage={sendPrivateMessage}
-					// 		/>
-					// 	)
-					// })
+					groupContent.map((group, index) => {
+						return (
+							<CustomPopper key={index} name={group.userName}
+											  handleClose={closeActiveUser}
+											  messages={group.messages}
+											  value={privateMessageValue}
+											  onChange={handlePrivateMessage}
+											  sendPrivateMessage={sendPrivateMessage}
+							/>
+						)
+					})
 				}
 			</div>
 		</div>

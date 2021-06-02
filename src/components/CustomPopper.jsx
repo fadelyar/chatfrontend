@@ -66,46 +66,44 @@ function CustomPopper(props) {
 					<CloseIcon/>
 				</IconButton>
 			</div>
-			<div className={classes.messageArea}>
-				<h2 style={{color: 'white'}}>				{JSON.stringify(props.messages, null, 2)}
-				</h2>
-				{
-					props.messages.map((message, index) => {
-						return (
-							<div key={index}
-								  style={{
-									  display: "flex",
-									  justifyContent:
-										  props.name === message.user.name
-											  ? "flex-end"
-											  : "flex-start",
-									  height: "40px",
-								  }}>
-								<Typography
-									variant="body2"
-									// style={{
-									// 	fontFamily: "Fira Code",
-									// 	borderRadius: 10,
-									// 	backgroundColor:
-									// 		props.name === message.user.name
-									// 			? "white"
-									// 			: purple["600"],
-									// 	color:
-									// 		props.name === message.user.name
-									// 			? "black"
-									// 			: "white",
-									// 	alignItems: "center",
-									// 	marginTop: 5,
-									// 	padding: 5,
-									// }}
-								>
-									{JSON.stringify(message, null, 2)}
-								</Typography>
-							</div>
-						)
-					})
-				}
-			</div>
+			{/*<div className={classes.messageArea}>*/}
+			{/*	{*/}
+			{/*		props.messages.map((message, index) => {*/}
+			{/*			return (*/}
+			{/*				<div key={index}*/}
+			{/*					  style={{*/}
+			{/*						  display: "flex",*/}
+			{/*						  justifyContent:*/}
+			{/*							  props.name === message.user.name*/}
+			{/*								  ? "flex-end"*/}
+			{/*								  : "flex-start",*/}
+			{/*						  height: "40px",*/}
+			{/*					  }}>*/}
+			{/*					<Typography*/}
+			{/*						variant="body2"*/}
+			{/*						// style={{*/}
+			{/*						// 	fontFamily: "Fira Code",*/}
+			{/*						// 	borderRadius: 10,*/}
+			{/*						// 	backgroundColor:*/}
+			{/*						// 		props.name === message.user.name*/}
+			{/*						// 			? "white"*/}
+			{/*						// 			: purple["600"],*/}
+			{/*						// 	color:*/}
+			{/*						// 		props.name === message.user.name*/}
+			{/*						// 			? "black"*/}
+			{/*						// 			: "white",*/}
+			{/*						// 	alignItems: "center",*/}
+			{/*						// 	marginTop: 5,*/}
+			{/*						// 	padding: 5,*/}
+			{/*						// }}*/}
+			{/*					>*/}
+			{/*						{JSON.stringify(message, null, 2)}*/}
+			{/*					</Typography>*/}
+			{/*				</div>*/}
+			{/*			)*/}
+			{/*		})*/}
+			{/*	}*/}
+			{/*</div>*/}
 			<div className={classes.footerDiv}>
 				<IconButton style={{borderRadius: 0, color: purple["900"]}}
 								onClick={() => {

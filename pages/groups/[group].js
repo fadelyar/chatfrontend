@@ -201,7 +201,7 @@ function Group(props) {
 			});
 			socket.on('sendBackPrivateMessage', (data) => {
 				const group = privateContent.find((content) => content.userName === data.receiver)
-				setGroupContent((prev) => {
+				setPrivateContent((prev) => {
 					return prev.map((content) => {
 						return content.userName !== group.userName
 							? content : content.messages.concat(data.message)
@@ -458,7 +458,8 @@ function Group(props) {
 				position: 'fixed',
 				width: '100%',
 				display: 'flex',
-				bottom: '45px'
+				bottom: '45px',
+				justifyContent: 'flex-end'
 			}}>
 				{
 					privateContent.map((group, index) => {

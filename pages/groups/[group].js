@@ -130,6 +130,7 @@ function Group(props) {
 	const openActiveUser = function (userName) {
 		if (userName === props.currentUser.name || privateContent.length > 3) return
 		setPrivateContent(prevState => {
+			if (prevState.find((user) => user.userName === userName)) return prevState
 			return [...prevState, {userName: userName, messages: []}]
 		})
 	}
@@ -201,8 +202,6 @@ function Group(props) {
 				});
 			});
 			socket.on('sendBackPrivateMessage', (data) => {
-				console.log('data', data)
-
 				setPrivateContent((prev) => {
 					const newArray = prev.find((content) => content.userName === data.receiver)
 					if (!newArray) {

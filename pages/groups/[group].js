@@ -198,6 +198,7 @@ function Group(props) {
 				setMessages((prev) => {
 					return [...prev, data];
 				});
+				console.log('from another place privateContent--->', privateContent)
 			});
 			socket.on('sendBackPrivateMessage', (data) => {
 				const group = privateContent.find((content) => content.userName === data.receiver)

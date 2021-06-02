@@ -222,7 +222,7 @@ function Group(props) {
 					const updatedArray = prev.map((user) => {
 						if (user.userName === newArray.userName) {
 							console.log('if clause happened!')
-							user.messages.concat(data.message)
+							user.messages = user.messages.concat(data.message)
 							return user
 						}
 						return user

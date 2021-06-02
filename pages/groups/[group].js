@@ -458,7 +458,7 @@ function Group(props) {
 				bottom: '45px'
 			}}>
 				{
-					groupContent.map((group, index) => {
+					privateContent.map((group, index) => {
 						return (
 							<CustomPopper key={index} name={group.userName}
 											  handleClose={closeActiveUser}

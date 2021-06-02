@@ -201,12 +201,14 @@ function Group(props) {
 			});
 			socket.on('sendBackPrivateMessage', (data) => {
 				const group = privateContent.find((content) => content.userName === data.receiver)
-				setPrivateContent((prev) => {
-					return prev.map((content) => {
-						return content.userName !== group.userName
-							? content : content.messages.concat(data.message)
-					})
-				})
+				console.log('group---->', group)
+				console.log('privateGroup---->', privateContent)
+				// setPrivateContent((prev) => {
+				// 	return prev.map((content) => {
+				// 		return content.userName !== group.userName
+				// 			? content : content.messages.concat(data.message)
+				// 	})
+				// })
 			})
 		}
 	}, [props.group]);

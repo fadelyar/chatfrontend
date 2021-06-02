@@ -28,6 +28,7 @@ import axios from "axios";
 import Link from "next/link";
 import Badge from "@material-ui/core/Badge";
 import MailIcon from '@material-ui/icons/Mail'
+import CustomPopper from "../../src/components/CustomPopper";
 
 let socket = null;
 
@@ -123,6 +124,29 @@ function Group(props) {
 	const [openDialog, setOpenDialog] = useState(false);
 	const [groupContent, setGroupContent] = useState([]);
 	const [groupContentLoaded, setGroupContentLoaded] = useState(true);
+	const [privateContent, setPrivateContent] = useState([])
+	const [privateMessageValue, setPrivateMessageValue] = useState('')
+
+	const openActiveUser = function (userName) {
+		setPrivateContent(prevState => {
+			return [...prevState, {userName: userName, messages: []}]
+		})
+	}
+
+	const closeActiveUser = function (userName) {
+		const filtered = privateContent.filter((content) => {
+			return content.userName !== userName
+		})
+		setPrivateContent(filtered)
+	}
+
+	const sendPrivateMessage = function (id) {
+		socket.emit('privateMessage', {message: privateMessageValue, id: id})
+	}
+
+	const handlePrivateMessage = function (event) {
+		setPrivateMessageValue(event.target.value)
+	}
 
 	const handleChange = (panel) => (event, isExpanded) => {
 		setExpanded(isExpanded ? panel : false);
@@ -172,6 +196,15 @@ function Group(props) {
 					return [...prev, data];
 				});
 			});
+			socket.on('sendBackPrivateMessage', (data) => {
+				const group = privateContent.find((content) => content.userName === data.user.name)
+				setGroupContent((prev) => {
+					return prev.map((content) => {
+						return content.userName !== group.userName
+							? content : content.messages.concat(data)
+					})
+				})
+			})
 		}
 	}, [props.group]);
 	if (!props.currentUser) {
@@ -317,6 +350,9 @@ function Group(props) {
 																{member.name}
 															</Typography>
 															<Badge badgeContent={10} max={5} color='secondary'
+																	 onClick={() => {
+																		 openActiveUser(member.name)
+																	 }}
 															>
 																<MailIcon/>
 															</Badge>
@@ -414,6 +450,26 @@ function Group(props) {
 						onKeyPress={sendMessage}
 					/>
 				</div>
+			</div>
+			<div style={{
+				position: 'fixed',
+				width: '100%',
+				display: 'flex',
+				bottom: '45px'
+			}}>
+				{
+					groupContent.map((group, index) => {
+						return (
+							<CustomPopper key={index} name={group.userName}
+											  handleClose={closeActiveUser}
+											  messages={group.messages}
+											  value={privateMessageValue}
+											  onChange={handlePrivateMessage}
+											  sendPrivateMessage={sendPrivateMessage}
+							/>
+						)
+					})
+				}
 			</div>
 		</div>
 	);

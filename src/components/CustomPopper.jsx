@@ -114,7 +114,7 @@ function CustomPopper(props) {
 					<SendIcon/>
 				</IconButton>
 				<InputBase className={classes.inputBase}
-							  onChange={props.handlePrivateMessage}/>
+							  onChange={props.onChange}/>
 			</div>
 		</Paper>
 	);

@@ -216,12 +216,12 @@ function Group(props) {
 				// 			? content : content.messages.concat(data.message)
 				// 	})
 				// })
+				console.log('data', data)
 				setPrivateContent((prev) => {
 					console.log('this is cool', prev)
-					return prev.map((content) => {
-						return content.userName !== data.receiver
-							? content : content.messages.concat(data.message)
-					})
+					const newArray = prev.find((content) => content.userName === data.receiver)
+					console.log('newArray', newArray)
+					return prev
 				})
 			})
 		}

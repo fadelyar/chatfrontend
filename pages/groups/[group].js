@@ -128,6 +128,7 @@ function Group(props) {
 	const [privateMessageValue, setPrivateMessageValue] = useState('')
 
 	const openActiveUser = function (userName) {
+		if (userName === props.currentUser.name || privateContent.length > 3) return
 		setPrivateContent(prevState => {
 			return [...prevState, {userName: userName, messages: []}]
 		})

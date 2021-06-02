@@ -218,6 +218,9 @@ function Group(props) {
 				// 			? content : content.messages.concat(data.message)
 				// 	})
 				// })
+				setPrivateContent((prev) => {
+					return [...prev, {userName: 'wow', messages: []}]
+				})
 			})
 		}
 	}, [props.group]);

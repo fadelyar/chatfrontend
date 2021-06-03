@@ -20,7 +20,7 @@ const useStyle = makeStyles((theme) => ({
 	},
 	messageArea: {
 		flexGrow: 1,
-		backgroundColor: 'gray'
+		backgroundColor: 'lightgrey'
 	},
 	headerDiv: {
 		display: "flex",
@@ -77,7 +77,8 @@ function CustomPopper(props) {
 										  props.name === message.user.name
 											  ? "flex-end"
 											  : "flex-start",
-									  height: "40px",
+									  height: "auto",
+									  maxWidth: '140px'
 								  }}>
 								<div style={{
 									display: 'flex',
@@ -100,7 +101,7 @@ function CustomPopper(props) {
 													? "black"
 													: "white",
 											marginTop: 5,
-											padding: 5,
+											padding: 2,
 										}}
 									>
 										{message.content}

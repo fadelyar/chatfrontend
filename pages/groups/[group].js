@@ -147,7 +147,6 @@ function Group(props) {
 			'privateMessage',
 			{message: privateMessageValue, sender: props.currentUser.name, receiver: id}
 		)
-		openActiveUser(id)
 	}
 
 	const handlePrivateMessage = function (event) {
@@ -205,9 +204,9 @@ function Group(props) {
 			socket.on('sendBackPrivateMessage', (data) => {
 				setPrivateContent((prev) => {
 					const newArray = prev.find((content) => content.userName === data.receiver)
-					// if (!newArray) {
-					// 	openActiveUser(data.receiver)
-					// }
+					if (!newArray) {
+						openActiveUser(data.receiver)
+					}
 					const updatedArray = prev.map((user) => {
 						if (user.userName === newArray.userName) {
 							user.messages = user.messages.concat(data.message)

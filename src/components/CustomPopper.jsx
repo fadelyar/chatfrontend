@@ -73,36 +73,39 @@ function CustomPopper(props) {
 							<div key={index}
 								  style={{
 									  display: "flex",
-									  flexDirection: 'column',
 									  justifyContent:
 										  props.name === message.user.name
 											  ? "flex-end"
 											  : "flex-start",
 									  height: "40px",
 								  }}>
-								<Typography variant='caption' style={{color: 'black'}}>
-									{message.user.name}
-								</Typography>
-								<Typography
-									variant="body2"
-									style={{
-										fontFamily: "Fira Code",
-										borderRadius: 10,
-										backgroundColor:
-											props.name === message.user.name
-												? "white"
-												: purple["600"],
-										color:
-											props.name === message.user.name
-												? "black"
-												: "white",
-										alignItems: "center",
-										marginTop: 5,
-										padding: 5,
-									}}
-								>
-									{message.content}
-								</Typography>
+								<div style={{
+									display: 'flex',
+									flexDirection: 'column'
+								}}>
+									<Typography variant='caption' style={{color: 'black'}}>
+										{message.user.name}
+									</Typography>
+									<Typography
+										variant="body2"
+										style={{
+											fontFamily: "Fira Code",
+											borderRadius: 10,
+											backgroundColor:
+												props.name === message.user.name
+													? "white"
+													: purple["600"],
+											color:
+												props.name === message.user.name
+													? "black"
+													: "white",
+											marginTop: 5,
+											padding: 5,
+										}}
+									>
+										{message.content}
+									</Typography>
+								</div>
 							</div>
 						)
 					})

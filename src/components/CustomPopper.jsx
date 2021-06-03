@@ -82,7 +82,10 @@ function CustomPopper(props) {
 								  }}>
 								<div style={{
 									display: 'flex',
-									flexDirection: 'column'
+									flexDirection: 'column',
+									alignItems: props.name === message.user.name
+										? "flex-end"
+										: "flex-start",
 								}}>
 									<Typography variant='caption' style={{color: 'black'}}>
 										{message.user.name}

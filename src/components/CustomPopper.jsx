@@ -73,12 +73,16 @@ function CustomPopper(props) {
 							<div key={index}
 								  style={{
 									  display: "flex",
+									  flexDirection: 'column',
 									  justifyContent:
 										  props.name === message.user.name
 											  ? "flex-end"
 											  : "flex-start",
 									  height: "40px",
 								  }}>
+								<Typography variant='caption' style={{color: 'black'}}>
+									{message.user.name}
+								</Typography>
 								<Typography
 									variant="body2"
 									style={{

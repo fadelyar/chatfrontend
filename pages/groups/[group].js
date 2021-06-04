@@ -26,7 +26,6 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import CustomAvatar from "../../src/components/CustomAvatar";
 import axios from "axios";
 import Link from "next/link";
-import Badge from "@material-ui/core/Badge";
 import MailIcon from '@material-ui/icons/Mail'
 import CustomPopper from "../../src/components/CustomPopper";
 
@@ -341,6 +340,7 @@ function Group(props) {
 																marginBottom: 3,
 																display: "flex",
 																alignItems: "center",
+																color: 'lightgrey'
 															}}
 														>
 															{/*<Avatar*/}
@@ -364,13 +364,15 @@ function Group(props) {
 															>
 																{member.name}
 															</Typography>
-															<Badge badgeContent={10} max={5} color='secondary'
-																	 onClick={() => {
-																		 openActiveUser(member.name)
-																	 }}
-															>
-																<MailIcon/>
-															</Badge>
+															{/*<Badge badgeContent={10} max={5} color='secondary'*/}
+															{/*		 onClick={() => {*/}
+															{/*			 openActiveUser(member.name)*/}
+															{/*		 }}*/}
+															{/*>*/}
+															<MailIcon color='inherit' onClick={() => {
+																openActiveUser(member.name)
+															}}/>
+															{/*</Badge>*/}
 														</div>
 													);
 												})}

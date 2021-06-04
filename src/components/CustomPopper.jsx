@@ -74,6 +74,7 @@ function CustomPopper(props) {
 									  display: "flex",
 									  padding: '5px',
 									  border: '1px solid green',
+									  maxWidth: '299px',
 									  justifyContent:
 										  props.name === message.user.name
 											  ? "flex-end"

@@ -41,6 +41,7 @@ const useStyle = makeStyles((theme) => ({
 		height: "100%",
 		color: "black",
 		width: "100%",
+		fontSize: '90%'
 	},
 	flexGrow: {
 		flexGrow: 1

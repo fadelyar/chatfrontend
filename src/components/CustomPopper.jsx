@@ -103,10 +103,7 @@ function CustomPopper(props) {
 												props.name === message.user.name
 													? "gray"
 													: purple["600"],
-											color:
-												props.name === message.user.name
-													? "black"
-													: "white",
+											color: "white",
 											marginTop: 5,
 											padding: 2,
 										}}

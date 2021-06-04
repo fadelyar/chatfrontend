@@ -226,6 +226,14 @@ function Group(props) {
 			<CssBaseline/>
 			<CustomHeader open={open} handleOpen={openOpen}/>
 			<CustomDialog open={openDialog} handleClose={closeOpenDialog}/>
+			{/*<div style={{*/}
+			{/*	position: 'fixed', top: '50px',*/}
+			{/*	display: 'flex', justifyContent: 'center'*/}
+			{/*}}>*/}
+			{/*	<Typography>*/}
+			{/*		Chat Private by clicking on Mail Icon!*/}
+			{/*	</Typography>*/}
+			{/*</div>*/}
 			<Drawer
 				className={classes.drawer}
 				variant="persistent"
@@ -242,9 +250,6 @@ function Group(props) {
 							color: "white",
 							paddingLeft: 13,
 							fontFamily: "Fira Code",
-						}}
-						onMouseOver={() => {
-							console.log('private content', privateContent)
 						}}
 					>
 						Chat Groups

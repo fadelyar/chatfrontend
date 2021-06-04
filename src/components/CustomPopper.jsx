@@ -73,7 +73,7 @@ function CustomPopper(props) {
 								  style={{
 									  display: "flex",
 									  padding: '5px',
-									  border: '1px solid green',
+									  // border: '1px solid green',
 									  maxWidth: '299px',
 									  justifyContent:
 										  props.name === message.user.name
@@ -84,15 +84,16 @@ function CustomPopper(props) {
 								  }}>
 								<div style={{
 									display: 'flex',
-									border: '1px solid orange',
+									// border: '1px solid orange',
 									flexDirection: 'column',
+									width: '85%',
 									alignItems: props.name === message.user.name
 										? "flex-end"
 										: "flex-start",
 								}}>
-									<Typography variant='caption' style={{color: 'black'}}>
-										{message.user.name}
-									</Typography>
+									{/*<Typography variant='caption' style={{color: 'black'}}>*/}
+									{/*	{message.user.name}*/}
+									{/*</Typography>*/}
 									<Typography
 										variant="body2"
 										style={{
@@ -100,7 +101,7 @@ function CustomPopper(props) {
 											borderRadius: 10,
 											backgroundColor:
 												props.name === message.user.name
-													? "white"
+													? "gray"
 													: purple["600"],
 											color:
 												props.name === message.user.name

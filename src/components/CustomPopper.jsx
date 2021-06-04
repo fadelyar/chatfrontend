@@ -73,6 +73,7 @@ function CustomPopper(props) {
 							<div key={index}
 								  style={{
 									  display: "flex",
+									  border: '1px solid green',
 									  justifyContent:
 										  props.name === message.user.name
 											  ? "flex-end"

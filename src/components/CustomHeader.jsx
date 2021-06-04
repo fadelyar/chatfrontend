@@ -11,9 +11,7 @@ import {theme} from '../theme'
 import {connect} from 'react-redux'
 import {useRouter} from 'next/router';
 import {logOut} from '../store/appstore/actions'
-import Typography from "@material-ui/core/Typography";
 import HomeIcon from '@material-ui/icons/HomeRounded'
-import {Icon} from "@material-ui/core";
 
 const drawerWidth = 240
 
@@ -80,10 +78,10 @@ function CustomHeader(props) {
 					>
 						<MenuIcon/>
 					</IconButton>
-					<IconButton onClick={() => {
+					<IconButton style={{color: 'lightgrey'}} onClick={() => {
 						router.push('/')
 					}}>
-						<HomeIcon/>
+						<HomeIcon color='inherit' fontSize='large'/>
 					</IconButton>
 					<div className={classes.flexGrow}/>
 					<div className={classes.rightDiv}>

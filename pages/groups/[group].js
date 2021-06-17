@@ -422,7 +422,7 @@ function Group(props) {
 						overflow: "auto",
 					}}
 				>
-					{props.currentTarget &&
+					{ props.currentUser &&
 					messages.map((message, index) => {
 						return (
 							<div

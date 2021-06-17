@@ -12,6 +12,7 @@ import {useRouter} from "next/router";
 import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 import CustomHeader from "../src/components/CustomHeader";
+import Loader from "../src/components/Loader";
 
 const useStyle = makeStyles((theme) => ({
 	root: {
@@ -84,6 +85,10 @@ function Login(props) {
 			router.replace("/");
 		});
 	};
+
+	if (props.loaded) {
+		return <Loader/>
+	}
 
 	return (
 		<div className={classes.root}>

@@ -241,8 +241,8 @@ function Group(props) {
 		} else {
 			setMessages(props.previousMessages);
 			socket = io(
-				// `https://live-chat-application-simple.herokuapp.com/?room=${props.group}`,
-				`http://localhost:5000/?room=${props.group}`,
+				`https://live-chat-application-simple.herokuapp.com/?room=${props.group}`,
+				// `http://localhost:5000/?room=${props.group}`,
 				{
 					auth: {
 						token: props.currentUser.token,
@@ -598,8 +598,8 @@ function Group(props) {
 export async function getServerSideProps(context) {
 	const {group} = context.params;
 	const response = await axios.get(
-		// `https://live-chat-application-simple.herokuapp.com/chat/getlast30messages/${group}`
-		`http://localhost:5000/chat/getlast30messages/${group}`
+		`https://live-chat-application-simple.herokuapp.com/chat/getlast30messages/${group}`
+		// `http://localhost:5000/chat/getlast30messages/${group}`
 	);
 
 	const data = response.data;

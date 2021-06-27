@@ -40,8 +40,8 @@ export const login = function (data, callback) {
       // axios.post('https://chat-rest-api-backend.herokuapp.com/userprofile/login/', data)
       axios
          .post(
-            // "https://live-chat-application-simple.herokuapp.com/user/login",
-            "http://localhost:5000/user/login",
+            "https://live-chat-application-simple.herokuapp.com/user/login",
+            // "http://localhost:5000/user/login",
             data
          )
          .then((response) => {
@@ -65,8 +65,8 @@ export const register = function (data, callback) {
       // )
       axios
          .post(
-            // "https://live-chat-application-simple.herokuapp.com/user/register",
-            "http://localhost:5000/user/register",
+            "https://live-chat-application-simple.herokuapp.com/user/register",
+            // "http://localhost:5000/user/register",
             data
          )
          .then((response) => {

@@ -123,9 +123,7 @@ function CustomHeader(props) {
 						}
 						{props.currentUser &&
 
-						<Avatar>
-							{props.currentUser ? props.currentUser.name.charAt(0) : null}
-						</Avatar>
+						<Avatar/>
 						}
 					</div>
 				</ToolBar>

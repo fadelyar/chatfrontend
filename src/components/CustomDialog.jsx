@@ -34,9 +34,9 @@ function CustomDialog(props) {
                Join Room
             </DialogTitle>
             <DialogContent>
-               <DialogContentText>
-                  To join room, please first login to the system by entring you email && password!
-               </DialogContentText>
+               {/*<DialogContentText>*/}
+               {/*   To join room, please first login to the system by entring you email && password!*/}
+               {/*</DialogContentText>*/}
                <TextField
                   autoFocus
                   margin="dense"

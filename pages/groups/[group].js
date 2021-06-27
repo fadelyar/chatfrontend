@@ -11,7 +11,7 @@ import clsx from "clsx";
 import InputBase from "@material-ui/core/InputBase";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Divider from "@material-ui/core/Divider";
-import {Button} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 import {connect} from "react-redux";
 import GroupIcon from "@material-ui/icons/CardMembership";
 import Accordion from "@material-ui/core/Accordion";
@@ -28,6 +28,10 @@ import axios from "axios";
 import Link from "next/link";
 import MailIcon from "@material-ui/icons/Mail";
 import CustomPopper from "../../src/components/CustomPopper";
+import PhotoImage from '@material-ui/icons/PhotoCamera'
+import CustomBackdrop from '../../src/components/CustomBackdrop'
+import Image from 'next/image'
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 let socket = null;
 
@@ -63,7 +67,6 @@ const useStyle = makeStyles((theme) => ({
 		display: "flex",
 		flexDirection: "column",
 		height: "100vh",
-		border: "1px solid black",
 	},
 	mainShift: {
 		width: `calc(100% - ${240}px)`,
@@ -109,11 +112,16 @@ const useStyle = makeStyles((theme) => ({
 			color: "white",
 		},
 	},
+	image: {
+		borderRadius: 10,
+		cursor: 'pointer'
+	}
 }));
 
 function Group(props) {
-	const messagesDivRef = useRef(null);
 
+	const messagesDivRef = useRef(null);
+	const matches = useMediaQuery('(min-width:600px)')
 	const router = useRouter();
 	const classes = useStyle();
 	const [open, setOpen] = useState(true);
@@ -125,20 +133,49 @@ function Group(props) {
 	const [groupContentLoaded, setGroupContentLoaded] = useState(true);
 	const [privateContent, setPrivateContent] = useState([]);
 	const [privateMessageValue, setPrivateMessageValue] = useState({});
+	const [backDropImage, setBackDropImage] = useState(false)
+	const [selectedImage, setSelectedImage] = useState(null)
+	// const [image, setImage] = useState()
+
+	const handleCloseBackDropImage = function () {
+		setBackDropImage(false)
+	}
+
+	const openBackDropImage = function (event) {
+		setBackDropImage(true)
+		setSelectedImage(event.currentTarget.src)
+	}
+
+	const uploadImage = function (event, eventName) {
+		if (event.currentTarget.files[0] && event.currentTarget.files[0].type.startsWith('image')
+			&& event.currentTarget.files[0].size < 1048576) {
+			const reader = new FileReader()
+			const file = event.currentTarget.files[0]
+			const name = event.currentTarget.name
+			reader.onload = function (evt) {
+				if (eventName === 'privateMessage') {
+					sendPrivateMessage(name, 'image', evt.target.result)
+				} else {
+					socket.emit(eventName, {data: evt.target.result, type: 'image'})
+				}
+			}
+
+			reader.readAsDataURL(file)
+		}
+	}
 
 	const openActiveUser = function (userName) {
-		if (userName === props.currentUser.name || privateContent.length > 3)
-			return;
+		if (userName === props.currentUser.name || privateContent.length > 3) return
 
 		setPrivateMessageValue((prev) => {
 			return {...prev, [userName]: ""};
-		});
+		})
 		setPrivateContent((prevState) => {
 			if (prevState.find((user) => user.userName === userName))
 				return prevState;
 			return [...prevState, {userName: userName, messages: []}];
-		});
-	};
+		})
+	}
 
 	const closeActiveUser = function (userName) {
 		const filtered = privateContent.filter((content) => {
@@ -147,12 +184,18 @@ function Group(props) {
 		setPrivateContent(filtered);
 	};
 
-	const sendPrivateMessage = function (id) {
+	const sendPrivateMessage = function (id, type = 'text', result = null) {
 		socket.emit("privateMessage", {
-			message: privateMessageValue[id],
-			sender: props.currentUser.name,
-			receiver: id,
+			data: {
+				message: type === 'text' ? privateMessageValue[id] : result,
+				sender: props.currentUser.name,
+				receiver: id,
+			},
+			type: type
 		});
+		setPrivateMessageValue(prevState => {
+			return {...prevState, [id]: ''}
+		})
 	};
 
 	const handlePrivateMessage = function (event) {
@@ -171,9 +214,9 @@ function Group(props) {
 		setMessageValue(event.currentTarget.value);
 	};
 	const sendMessage = function (event) {
-		if (event.target.value.length === 0) return;
+		if (event.target.value.trim().length === 0) return;
 		if (event.charCode == 13) {
-			socket.emit("sendMessage", messageValue);
+			socket.emit("sendMessage", {data: messageValue, type: 'text'});
 			setMessageValue("");
 		}
 	};
@@ -187,14 +230,19 @@ function Group(props) {
 
 	if (!props.currentUser) router.push("/login");
 
+
+	useEffect(() => {
+		setOpen(matches)
+	}, [matches])
+
 	useEffect(() => {
 		if (!props.currentUser) {
 			router.push("/login");
 		} else {
 			setMessages(props.previousMessages);
 			socket = io(
-				`https://live-chat-application-simple.herokuapp.com/?room=${props.group}`,
-				// `http://localhost:5000/?room=${props.group}`,
+				// `https://live-chat-application-simple.herokuapp.com/?room=${props.group}`,
+				`http://localhost:5000/?room=${props.group}`,
 				{
 					auth: {
 						token: props.currentUser.token,
@@ -209,8 +257,9 @@ function Group(props) {
 			});
 			socket.on("sendBack", (data) => {
 				setMessages((prev) => {
-					return [...prev, data];
+					return [...prev, {data: data.data, type: data.type}];
 				});
+				messagesDivRef.current.scrollIntoView({behavior: 'smooth'})
 			});
 			socket.on("sendBackPrivateMessage", (data) => {
 				setPrivateContent((prev) => {
@@ -235,11 +284,15 @@ function Group(props) {
 	if (!props.currentUser) {
 		router.push("/login");
 	}
+
 	return (
 		<div>
 			<CssBaseline/>
 			<CustomHeader open={open} handleOpen={openOpen}/>
 			<CustomDialog open={openDialog} handleClose={closeOpenDialog}/>
+			<CustomBackdrop open={backDropImage} src={selectedImage}
+								 handleClose={handleCloseBackDropImage}
+			/>
 			<Drawer
 				className={classes.drawer}
 				variant="persistent"
@@ -354,14 +407,6 @@ function Group(props) {
 																color: "lightgrey",
 															}}
 														>
-															{/*<Avatar*/}
-															{/*   variant="rounded"*/}
-															{/*   style={{*/}
-															{/*      width: "20px",*/}
-															{/*      height: "20px",*/}
-															{/*      marginRight: 10,*/}
-															{/*   }}*/}
-															{/*></Avatar>*/}
 															<CustomAvatar src={"/man.png"}/>
 															<div
 																style={{
@@ -414,6 +459,7 @@ function Group(props) {
 			</Drawer>
 			<div className={clsx(!open ? classes.main : classes.mainShift)}>
 				<div
+
 					style={{
 						flexGrow: 1,
 						backgroundColor: "lightgray",
@@ -422,7 +468,7 @@ function Group(props) {
 						overflow: "auto",
 					}}
 				>
-					{ props.currentUser &&
+					{props.currentUser &&
 					messages.map((message, index) => {
 						return (
 							<div
@@ -431,41 +477,50 @@ function Group(props) {
 								style={{
 									display: "flex",
 									justifyContent:
-										props.currentUser.name === message.user.name
+										props.currentUser.name === message.data.user.name
 											? "flex-end"
 											: "flex-start",
-									height: "40px",
+									marginBottom: 5
 								}}
 							>
-								<Tooltip
-									title={new Date(
-										message.dateCreated
-									).toLocaleTimeString()}
-									arrow
-								>
-									<Typography
-										variant="body2"
-										style={{
-											fontFamily: "Fira Code",
-											borderRadius: 10,
-											backgroundColor:
-												props.currentUser.name ===
-												message.user.name
-													? "white"
-													: purple["600"],
-											color:
-												props.currentUser.name ===
-												message.user.name
-													? "black"
-													: "white",
-											alignItems: "center",
-											marginTop: 5,
-											padding: 5,
-										}}
-									>
-										{message.content}
-									</Typography>
-								</Tooltip>
+								{
+									message.data.type === 'text' ?
+										<Tooltip
+											title={new Date(
+												message.data.dateCreated
+											).toLocaleTimeString()}
+											arrow
+										>
+											<Typography
+												variant="body2"
+												style={{
+													fontFamily: "Fira Code",
+													borderRadius: 10,
+													backgroundColor:
+														props.currentUser.name ===
+														message.data.user.name
+															? "white"
+															: purple["600"],
+													color:
+														props.currentUser.name ===
+														message.data.user.name
+															? "black"
+															: "white",
+													alignItems: "center",
+													marginTop: 5,
+													padding: 5,
+												}}
+											>
+												{message.data.content}
+											</Typography>
+										</Tooltip> :
+										<Image src={message.data.content} onClick={openBackDropImage}
+												 alt='image'
+												 className={classes.image}
+												 width={300}
+												 height={250}
+										/>
+								}
 							</div>
 						);
 					})}
@@ -480,7 +535,8 @@ function Group(props) {
 					<IconButton
 						style={{borderRadius: 0, color: purple["900"]}}
 						onClick={() => {
-							socket.emit("sendMessage", messageValue);
+							if (messageValue.trim().length === 0) return
+							socket.emit("sendMessage", {data: messageValue, type: 'text'});
 							setMessageValue("");
 						}}
 					>
@@ -492,6 +548,22 @@ function Group(props) {
 						value={messageValue}
 						onKeyPress={sendMessage}
 					/>
+					<div style={{
+						display: 'flex', marginRight: 10,
+						justifyContent: 'center', alignItems: 'center'
+					}}>
+						<input onChange={(event) => {
+							uploadImage(event, 'sendMessage')
+						}} type='file'
+								 itemType='image'
+								 style={{
+									 position: 'absolute', width: 20, cursor: 'pointer',
+									 opacity: 0, zIndex: 5
+								 }}/>
+						<IconButton size='small' style={{color: 'rebecapurple'}}>
+							<PhotoImage/>
+						</IconButton>
+					</div>
 				</div>
 			</div>
 			<div
@@ -513,6 +585,8 @@ function Group(props) {
 							value={privateMessageValue[group.userName]}
 							onChange={handlePrivateMessage}
 							sendPrivateMessage={sendPrivateMessage}
+							uploadImage={uploadImage}
+							openBackDropImage={openBackDropImage}
 						/>
 					);
 				})}
@@ -524,8 +598,8 @@ function Group(props) {
 export async function getServerSideProps(context) {
 	const {group} = context.params;
 	const response = await axios.get(
-		`https://live-chat-application-simple.herokuapp.com/chat/getlast30messages/${group}`
-		// `http://localhost:5000/chat/getlast30messages/${group}`
+		// `https://live-chat-application-simple.herokuapp.com/chat/getlast30messages/${group}`
+		`http://localhost:5000/chat/getlast30messages/${group}`
 	);
 
 	const data = response.data;

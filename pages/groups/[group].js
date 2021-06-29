@@ -1,10 +1,10 @@
 import CssBaseline from "@material-ui/core/CssBaseline";
-import {makeStyles} from "@material-ui/core/styles";
-import {useRouter} from "next/router";
-import React, {useEffect, useRef, useState} from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { useRouter } from "next/router";
+import React, { useEffect, useRef, useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import CustomHeader from "../../src/components/CustomHeader";
-import {purple} from "@material-ui/core/colors";
+import { purple } from "@material-ui/core/colors";
 import Drawer from "@material-ui/core/Drawer";
 import IconButton from "@material-ui/core/IconButton";
 import clsx from "clsx";
@@ -12,7 +12,7 @@ import InputBase from "@material-ui/core/InputBase";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import GroupIcon from "@material-ui/icons/CardMembership";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
@@ -21,7 +21,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SendIcon from "@material-ui/icons/SendRounded";
 import CustomDialog from "../../src/components/CustomDialog";
 import Tooltip from "@material-ui/core/Tooltip";
-import {io} from "socket.io-client";
+import { io } from "socket.io-client";
 import Skeleton from "@material-ui/lab/Skeleton";
 import CustomAvatar from "../../src/components/CustomAvatar";
 import axios from "axios";
@@ -32,6 +32,8 @@ import PhotoImage from '@material-ui/icons/PhotoCamera'
 import CustomBackdrop from '../../src/components/CustomBackdrop'
 import Image from 'next/image'
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 
 let socket = null;
 
@@ -135,8 +137,13 @@ function Group(props) {
 	const [privateMessageValue, setPrivateMessageValue] = useState({});
 	const [backDropImage, setBackDropImage] = useState(false)
 	const [selectedImage, setSelectedImage] = useState(null)
+	const [openSnack, setOpenSnack] = useState(false)
+	const [errorMessage, setErrorMessage] = useState('')
 	// const [image, setImage] = useState()
 
+	const closeSnack = function () {
+		setOpenSnack(false)
+	}
 	const handleCloseBackDropImage = function () {
 		setBackDropImage(false)
 	}
@@ -148,7 +155,7 @@ function Group(props) {
 
 	const uploadImage = function (event, eventName) {
 		if (event.currentTarget.files[0] && event.currentTarget.files[0].type.startsWith('image')
-			&& event.currentTarget.files[0].size < 1048576) {
+			&& event.currentTarget.files[0].size < 71680) {
 			const reader = new FileReader()
 			const file = event.currentTarget.files[0]
 			const name = event.currentTarget.name
@@ -156,11 +163,20 @@ function Group(props) {
 				if (eventName === 'privateMessage') {
 					sendPrivateMessage(name, 'image', evt.target.result)
 				} else {
-					socket.emit(eventName, {data: evt.target.result, type: 'image'})
+					socket.emit(eventName, { data: evt.target.result, type: 'image' })
 				}
 			}
 
 			reader.readAsDataURL(file)
+		} else {
+			setOpenSnack(true)
+			if (!event.currentTarget.files[0].type.startsWith('image')) {
+				setErrorMessage('image only!')
+				return
+			}
+			if (event.currentTarget.files[0].size > 71680) {
+				setErrorMessage('image size too big (size < 70kb)!')
+			}
 		}
 	}
 
@@ -168,12 +184,12 @@ function Group(props) {
 		if (userName === props.currentUser.name || privateContent.length > 3) return
 
 		setPrivateMessageValue((prev) => {
-			return {...prev, [userName]: ""};
+			return { ...prev, [userName]: "" };
 		})
 		setPrivateContent((prevState) => {
 			if (prevState.find((user) => user.userName === userName))
 				return prevState;
-			return [...prevState, {userName: userName, messages: []}];
+			return [...prevState, { userName: userName, messages: [] }];
 		})
 	}
 
@@ -194,13 +210,13 @@ function Group(props) {
 			type: type
 		});
 		setPrivateMessageValue(prevState => {
-			return {...prevState, [id]: ''}
+			return { ...prevState, [id]: '' }
 		})
 	};
 
 	const handlePrivateMessage = function (event) {
 		setPrivateMessageValue((prev) => {
-			return {...prev, [event.target.name]: event.target.value};
+			return { ...prev, [event.target.name]: event.target.value };
 		});
 	};
 
@@ -216,7 +232,7 @@ function Group(props) {
 	const sendMessage = function (event) {
 		if (event.target.value.trim().length === 0) return;
 		if (event.charCode == 13) {
-			socket.emit("sendMessage", {data: messageValue, type: 'text'});
+			socket.emit("sendMessage", { data: messageValue, type: 'text' });
 			setMessageValue("");
 		}
 	};
@@ -257,9 +273,9 @@ function Group(props) {
 			});
 			socket.on("sendBack", (data) => {
 				setMessages((prev) => {
-					return [...prev, {data: data.data, type: data.type}];
+					return [...prev, { data: data.data, type: data.type }];
 				});
-				messagesDivRef.current.scrollIntoView({behavior: 'smooth'})
+				messagesDivRef.current.scrollIntoView({ behavior: 'smooth' })
 			});
 			socket.on("sendBackPrivateMessage", (data) => {
 				setPrivateContent((prev) => {
@@ -287,12 +303,17 @@ function Group(props) {
 
 	return (
 		<div>
-			<CssBaseline/>
-			<CustomHeader open={open} handleOpen={openOpen}/>
-			<CustomDialog open={openDialog} handleClose={closeOpenDialog}/>
+			<CssBaseline />
+			<CustomHeader open={open} handleOpen={openOpen} />
+			<CustomDialog open={openDialog} handleClose={closeOpenDialog} />
 			<CustomBackdrop open={backDropImage} src={selectedImage}
-								 handleClose={handleCloseBackDropImage}
+				handleClose={handleCloseBackDropImage}
 			/>
+			<Snackbar open={openSnack} autoHideDuration={4000} onClose={closeSnack}>
+				<Alert onClose={closeSnack} severity="error">
+					{errorMessage}
+				</Alert>
+			</Snackbar>
 			<Drawer
 				className={classes.drawer}
 				variant="persistent"
@@ -319,15 +340,15 @@ function Group(props) {
 							color: "white",
 						}}
 					>
-						<ChevronLeftIcon/>
+						<ChevronLeftIcon />
 					</IconButton>
 				</div>
-				<Divider style={{backgroundColor: "lightgrey", height: 0.05}}/>
+				<Divider style={{ backgroundColor: "lightgrey", height: 0.05 }} />
 				<div className={classes.drawerMain}>
 					{groupContentLoaded ? (
 						<div>
-							<Skeleton className={classes.skeleton}/>
-							<Skeleton className={classes.skeleton}/>
+							<Skeleton className={classes.skeleton} />
+							<Skeleton className={classes.skeleton} />
 						</div>
 					) : (
 						<div>
@@ -344,17 +365,17 @@ function Group(props) {
 											}}
 										>
 											<AccordionSummary
-												style={{height: "40px"}}
+												style={{ height: "40px" }}
 												expandIcon={
 													<ExpandMoreIcon
-														style={{color: "white"}}
+														style={{ color: "white" }}
 													/>
 												}
 												aria-controls="panel1bh-content"
 												id="panel1bh-header"
 											>
-												<IconButton style={{color: "lightgrey"}}>
-													<GroupIcon fontSize="large"/>
+												<IconButton style={{ color: "lightgrey" }}>
+													<GroupIcon fontSize="large" />
 												</IconButton>
 												<div
 													style={{
@@ -407,7 +428,7 @@ function Group(props) {
 																color: "lightgrey",
 															}}
 														>
-															<CustomAvatar src={"/man.png"}/>
+															<CustomAvatar src={"/man.png"} />
 															<div
 																style={{
 																	display: "flex",
@@ -438,7 +459,7 @@ function Group(props) {
 																		);
 																	}}
 																>
-																	<MailIcon/>
+																	<MailIcon />
 																</IconButton>
 															</div>
 														</div>
@@ -451,7 +472,7 @@ function Group(props) {
 							})}
 						</div>
 					)}
-					<div style={{flexGrow: 1}}/>
+					<div style={{ flexGrow: 1 }} />
 					<Button variant="contained" onClick={handleJoin}>
 						Join
 					</Button>
@@ -469,61 +490,61 @@ function Group(props) {
 					}}
 				>
 					{props.currentUser &&
-					messages.map((message, index) => {
-						return (
-							<div
-								ref={messagesDivRef}
-								key={index}
-								style={{
-									display: "flex",
-									justifyContent:
-										props.currentUser.name === message.data.user.name
-											? "flex-end"
-											: "flex-start",
-									marginBottom: 5
-								}}
-							>
-								{
-									message.data.type === 'text' ?
-										<Tooltip
-											title={new Date(
-												message.data.dateCreated
-											).toLocaleTimeString()}
-											arrow
-										>
-											<Typography
-												variant="body2"
-												style={{
-													fontFamily: "Fira Code",
-													borderRadius: 10,
-													backgroundColor:
-														props.currentUser.name ===
-														message.data.user.name
-															? "white"
-															: purple["600"],
-													color:
-														props.currentUser.name ===
-														message.data.user.name
-															? "black"
-															: "white",
-													alignItems: "center",
-													marginTop: 5,
-													padding: 5,
-												}}
+						messages.map((message, index) => {
+							return (
+								<div
+									ref={messagesDivRef}
+									key={index}
+									style={{
+										display: "flex",
+										justifyContent:
+											props.currentUser.name === message.data.user.name
+												? "flex-end"
+												: "flex-start",
+										marginBottom: 5
+									}}
+								>
+									{
+										message.data.type === 'text' ?
+											<Tooltip
+												title={new Date(
+													message.data.dateCreated
+												).toLocaleTimeString()}
+												arrow
 											>
-												{message.data.content}
-											</Typography>
-										</Tooltip> :
-										<Image src={message.data.content} onClick={openBackDropImage}
-												 alt='image'
-												 className={classes.image}
-												 width={300}
-												 height={250}
-										/>
-								}
-							</div>
-						);
-					})}
+												<Typography
+													variant="body2"
+													style={{
+														fontFamily: "Fira Code",
+														borderRadius: 10,
+														backgroundColor:
+															props.currentUser.name ===
+																message.data.user.name
+																? "white"
+																: purple["600"],
+														color:
+															props.currentUser.name ===
+																message.data.user.name
+																? "black"
+																: "white",
+														alignItems: "center",
+														marginTop: 5,
+														padding: 5,
+													}}
+												>
+													{message.data.content}
+												</Typography>
+											</Tooltip> :
+											<Image src={message.data.content} onClick={openBackDropImage}
+												alt='image'
+												className={classes.image}
+												width={300}
+												height={250}
+											/>
+									}
+								</div>
+							);
+						})}
 				</div>
 				<div
 					style={{
@@ -533,14 +554,14 @@ function Group(props) {
 					}}
 				>
 					<IconButton
-						style={{borderRadius: 0, color: purple["900"]}}
+						style={{ borderRadius: 0, color: purple["900"] }}
 						onClick={() => {
 							if (messageValue.trim().length === 0) return
-							socket.emit("sendMessage", {data: messageValue, type: 'text'});
+							socket.emit("sendMessage", { data: messageValue, type: 'text' });
 							setMessageValue("");
 						}}
 					>
-						<SendIcon/>
+						<SendIcon />
 					</IconButton>
 					<InputBase
 						className={classes.inputBase}
@@ -555,13 +576,13 @@ function Group(props) {
 						<input onChange={(event) => {
 							uploadImage(event, 'sendMessage')
 						}} type='file'
-								 itemType='image'
-								 style={{
-									 position: 'absolute', width: 20, cursor: 'pointer',
-									 opacity: 0, zIndex: 5
-								 }}/>
-						<IconButton size='small' style={{color: 'rebecapurple'}}>
-							<PhotoImage/>
+							itemType='image'
+							style={{
+								position: 'absolute', width: 20, cursor: 'pointer',
+								opacity: 0, zIndex: 5
+							}} />
+						<IconButton size='small' style={{ color: 'rebecapurple' }}>
+							<PhotoImage />
 						</IconButton>
 					</div>
 				</div>
@@ -596,7 +617,7 @@ function Group(props) {
 }
 
 export async function getServerSideProps(context) {
-	const {group} = context.params;
+	const { group } = context.params;
 	const response = await axios.get(
 		`https://live-chat-application-simple.herokuapp.com/chat/getlast30messages/${group}`
 		// `http://localhost:5000/chat/getlast30messages/${group}`
